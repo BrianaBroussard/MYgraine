@@ -32,7 +32,6 @@ class Headache(db.Model):
     date_start = db.Column(db.DateTime)
     date_end = db.Column(db.DateTime)
     pain_scale = db.Column(db.Integer)
-    location_head = db.Column(db.String)
     headache_type = db.Column(db.String)
     additional_notes = db.Column(db.Text)
 
@@ -112,4 +111,4 @@ if __name__ == "__main__":
     # too annoying; this will tell SQLAlchemy not to print out every
     # query it executes.
 
-    connect_to_db(app)
+    connect_to_db(app, echo=False)
