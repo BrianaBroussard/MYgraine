@@ -16,7 +16,8 @@ class User(db.Model):
     password = db.Column(db.String)
     get_period = db.Column(db.String) #if gets periods
 
-    headache = db.relationship("Headache", back_populates="user")
+    headaches = db.relationship("Headache", back_populates="user")
+    triggers = db.relationship("Trigger", back_populates="user")
     period = db.relationship("Period", back_populates="user") #if gets periods
 
     def __repr__(self):
@@ -35,9 +36,8 @@ class Headache(db.Model):
     headache_type = db.Column(db.String)
     additional_notes = db.Column(db.Text)
 
-    user = db.relationship("User", back_populates="headache")
-    triggers = db.relationship("Trigger", back_populates="headache")
-    medication = db.relationship("Medication", back_populates="headache")
+    user = db.relationship("User", back_populates="headaches")
+    medications = db.relationship("Medication", back_populates="headaches")
 
     def __repr__(self):
         return f"<Headache headache_id={self.headache_id} type={self.headache_type}>"
@@ -49,12 +49,12 @@ class Trigger(db.Model):
     __tablename__ = "triggers"
 
     trigger_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     trigger_name = db.Column(db.String)
-    additional_notes = db.Column(db.Text)
+    trigger_count = db.Column(db.Integer)
     
 
-    headache = db.relationship("Headache", back_populates="triggers")
+    user = db.relationship("User", back_populates="triggers")
 
     def __repr__(self):
         return f"<Trigger trigger_id={self.trigger_id} trigger_name={self.trigger_name}>"
@@ -86,7 +86,7 @@ class Medication(db.Model):
     med_name = db.Column(db.String)
     efficacy = db.Column(db.String)
     
-    headache = db.relationship("Headache", back_populates="medication")
+    headaches = db.relationship("Headache", back_populates="medications")
 
     def __repr__(self):
         return f"<Medication medication_id={self.medication_id} med_name={self.med_name}>"

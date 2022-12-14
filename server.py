@@ -5,7 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect)
 from model import connect_to_db, db
 import crud
-from constants import headache_type
+from constants import headache_type, trigger_names
 
 from jinja2 import StrictUndefined
 
@@ -35,7 +35,8 @@ def process_login():
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
-        return render_template('/userprofile.html', user = user, headache_type = headache_type)
+        return render_template('user_profile.html', user = user)
+        
 
     return redirect("/")
 
@@ -56,8 +57,29 @@ def register_user():
         db.session.commit()
         flash("Account created! Please log in.")
 
+        #instantiate constant triggers for new user
+        for trigger in trigger_names:
+            trigger_count = 0
+            user = user
+            trigger_name = trigger
+            const_trigger = crud.create_trigger(user,
+                                  trigger_name,
+                                  trigger_count,
+                                  )
+            db.session.add(const_trigger)
+            db.session.commit()                          
+        
+
     return redirect("/")
 
+@app.route("/go-to-headache-log")
+def see_headache_log():
+    """button route to render headache log form"""
+    
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    return render_template('/log_headache.html', user = user, headache_type = headache_type)
 
 @app.route("/log-headache", methods=["POST"])
 def log_headache():
@@ -67,19 +89,69 @@ def log_headache():
     user = crud.get_user_by_email(logged_in_email)
     date_start = request.form.get('date-start')
     pain_scale = request.form.get('pain-scale')
-    headache_type = request.form.get('headache-type')
+    headache_type = request.form.get('headache-type')    
+    additional_notes = request.form.get('notes')
+    
+    date_ended = request.form.get('date-end')
+    if date_ended:
+        date_end = date_ended
+    else:
+        date_end = date_start
 
-    date_end = request.form.get('date-end')
-    additional_notes = request.form.get('')
-
-    headache = crud.create_headache(date_start, int(pain_scale), headache_type, user)
+    headache = crud.create_headache(date_start,
+                                    int(pain_scale),
+                                    headache_type, 
+                                    user,
+                                    date_end, 
+                                    additional_notes)
 
     db.session.add(headache)
     db.session.commit()
 
-    flash(f"headache logged")
+    flash(f"headache successfully logged")
 
-    return render_template("headaches.html", user = user)
+    return render_template("log_trigger.html", user = user)
+
+
+@app.route("/log-trigger",methods=["POST"])
+def log_trigger():
+    """Log trigger by incrementing count"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    triggers = request.form.getlist('triggers') #returns list of checked trigger_ids
+    
+    for trigger_id in triggers:
+        crud.update_trigger(trigger_id)
+       
+    db.session.commit()       
+    
+    flash(f"trigger successfully logged")
+    return render_template("user_profile.html", user = user)
+
+
+
+@app.route("/add-trigger", methods=["POST","GET"])
+def add_trigger():
+    """Create new trigger"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    new_trigger = request.form.get('add-trigger') 
+    trigger_count = 0
+    
+    trigger = crud.create_trigger(user,
+                        new_trigger,
+                        trigger_count
+                        )
+    db.session.add(trigger)
+    db.session.commit()       
+    
+    flash(f"trigger successfully added")
+    return render_template("log_trigger.html", user = user)
+
 
 
 if __name__ == "__main__":
