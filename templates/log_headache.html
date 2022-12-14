@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}MYgraine - dashboard {% endblock %}
+
+{% block body %}
+  <h1>{{user.email}} </h1>
+
+  <h2>Log a new headache</h2>
+  <form action="/log-headache" method="POST">
+    <p>
+        <label for="date-start">Headache Started:</label>
+
+        <input id="date-start" type="datetime-local" name="date-start" />
+    </p>
+
+    <p>
+        <label for="date-end">Headache Ended</label>
+
+        <input id="date-end" type="datetime-local" name="date-end" />
+    </p>
+
+    <p>
+        <label for="pain-scale">Rate your pain:</label>
+
+        <select name="pain-scale" id="pain-scale">
+        {% for num in range(11) %}    
+         <option value="{{num}}">{{num}}</option>
+         {% endfor %}    
+        </select>
+    </p>
+
+    <p>
+        <label for="headache-type">What is the type of headache:</label>
+
+        <select name="headache-type" id="headache-type">
+        {% for type in headache_type %}    
+         <option value="{{type}}">{{type}}</option>
+         {% endfor %}    
+        </select>
+    </p>
+
+    <p>
+        Additional notes: <input type="text" name="notes">
+    </p>
+
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+
+ 
+{% endblock %}

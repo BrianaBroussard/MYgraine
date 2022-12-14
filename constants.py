@@ -1,0 +1,41 @@
+
+headache_type = ['Migraine',
+                 'Tension-type headache',
+                 'Cluster headahce',
+                 'Postdrome',
+                 'Prodrome',
+                 'Sinus',
+                 'Other']
+
+
+trigger_names = ['Stress',
+            'Lack of sleep',
+            'Woke up late',
+            'Interrupted sleep',
+            'Depressed mood',
+            'Anxiey',
+            'Skipped meal',
+            'Humid weather',
+            'Dry weather',
+            'Stormy weather',
+            'Neck pain',
+            'Alcohol',
+            'Bright light',
+            'Dehydration',
+            'Caffeine',
+            'Processed food',
+            'Allergies',
+            'Strong smell',
+            'Sinus',
+            'Aged cheese',
+            'Chocolate']
+
+medications = ['Zomig',
+              'Relpax',
+              'Maxalt',
+              'Acetaminophen',
+              'Topiramate',
+              'Ibuprofen',
+              'Sumatriptan',
+              'Aimovig',
+              'Ubrelvy']
