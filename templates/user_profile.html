@@ -24,10 +24,10 @@
 
   <h2>Your Possible Triggers</h2>
   <div>
-    {% for trigger in user.triggers %}  
-    {% if trigger.trigger_count > 0 %}  
+    {% for triggername, triggercount in dict_users_triggers.items() %}  
+    {% if triggercount > 0 %}  
     <p> 
-        {{trigger.trigger_name}} - {{trigger.trigger_count}}
+        {{triggername}} - {{triggercount}}
     </p>
     {% endif %}
     {% endfor %}  

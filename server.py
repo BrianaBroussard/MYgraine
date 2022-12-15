@@ -5,7 +5,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect)
 from model import connect_to_db, db
 import crud
-from constants import headache_type, trigger_names
+from constants import headache_type
 
 from jinja2 import StrictUndefined
 
@@ -35,7 +35,10 @@ def process_login():
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
-        return render_template('user_profile.html', user = user)
+
+        dict_users_triggers = crud.get_users_triggers_with_count(user.user_id) #gets dictionary of user's triggers/counts
+
+        return render_template('user_profile.html', user = user, dict_users_triggers = dict_users_triggers)
         
 
     return redirect("/")
@@ -51,26 +54,18 @@ def register_user():
     user = crud.get_user_by_email(email)
     if user:
         flash("Cannot create an account with that email. Try again.")
+        return redirect("/")
+
     else:
         user = crud.create_user(email, password)
         db.session.add(user)
         db.session.commit()
-        flash("Account created! Please log in.")
+        flash("Account created! Lets get some more info.")
+        session["user_email"] = user.email #may take this out if rearrange registration
 
-        #instantiate constant triggers for new user
-        for trigger in trigger_names:
-            trigger_count = 0
-            user = user
-            trigger_name = trigger
-            const_trigger = crud.create_trigger(user,
-                                  trigger_name,
-                                  trigger_count,
-                                  )
-            db.session.add(const_trigger)
-            db.session.commit()                          
-        
-
-    return redirect("/")
+    triggers = crud.show_all_default_triggers()
+                
+    return render_template("create_account.html", user = user, triggers = triggers)
 
 @app.route("/go-to-headache-log")
 def see_headache_log():
@@ -110,7 +105,29 @@ def log_headache():
 
     flash(f"headache successfully logged")
 
-    return render_template("log_trigger.html", user = user)
+    users_triggers = crud.get_users_triggers(user.user_id)
+
+
+    return render_template("log_trigger.html", user = user, users_triggers = users_triggers)
+
+
+@app.route("/make-users-triggers",methods=["POST"])
+def make_users_default_triggers():
+    """Instantiate UserTrigger for user with the preset triggers"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    user_id = user.user_id  
+
+    triggers = request.form.getlist('default-triggers')     #returns list of checked trigger_ids
+
+    for trigger_id in triggers:
+        crud.add_trigger_for_user(user_id, trigger_id)
+       
+    
+    return redirect("/")
+
+
 
 
 @app.route("/log-trigger",methods=["POST"])
@@ -120,37 +137,46 @@ def log_trigger():
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
 
+
     triggers = request.form.getlist('triggers') #returns list of checked trigger_ids
     
     for trigger_id in triggers:
-        crud.update_trigger(trigger_id)
+        crud.update_trigger_count(user.user_id, trigger_id)
        
     db.session.commit()       
     
     flash(f"trigger successfully logged")
-    return render_template("user_profile.html", user = user)
+
+    dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
+
+    return render_template("user_profile.html", user = user, dict_users_triggers = dict_users_triggers )
 
 
 
 @app.route("/add-trigger", methods=["POST","GET"])
 def add_trigger():
-    """Create new trigger"""
+    """Create new trigger for the user"""
 
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
 
     new_trigger = request.form.get('add-trigger') 
-    trigger_count = 0
-    
-    trigger = crud.create_trigger(user,
-                        new_trigger,
-                        trigger_count
-                        )
+    trigger = crud.create_trigger(new_trigger)
     db.session.add(trigger)
+    db.session.commit()
+
+    user_trigger = crud.add_trigger_for_user(user.user_id, trigger.trigger_id)
+   
     db.session.commit()       
     
     flash(f"trigger successfully added")
-    return render_template("log_trigger.html", user = user)
+
+    users_triggers = crud.get_users_triggers(user.user_id)
+
+    return render_template("log_trigger.html", user = user, users_triggers = users_triggers)
+    #could return JSON string instead to JS file and reload DOM instead of reloading 
+
+
 
 
 

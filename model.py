@@ -17,7 +17,7 @@ class User(db.Model):
     get_period = db.Column(db.String) #if gets periods
 
     headaches = db.relationship("Headache", back_populates="user")
-    triggers = db.relationship("Trigger", back_populates="user")
+    user_triggers = db.relationship("UserTrigger", back_populates="user") #list of user trigger objects
     period = db.relationship("Period", back_populates="user") #if gets periods
 
     def __repr__(self):
@@ -43,21 +43,35 @@ class Headache(db.Model):
         return f"<Headache headache_id={self.headache_id} type={self.headache_type}>"
 
 
+class UserTrigger(db.Model):
+
+    __tablename__ = 'users_triggers'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    trigger_id = db.Column(db.Integer, db.ForeignKey("triggers.trigger_id"), nullable=False)
+    trigger_count = db.Column(db.Integer, default = 0)
+    
+    user = db.relationship("User", back_populates="user_triggers")
+    trigger = db.relationship("Trigger", back_populates="users_trigger")
+    
+
 class Trigger(db.Model):
     """A trigger."""
 
     __tablename__ = "triggers"
 
     trigger_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    trigger_name = db.Column(db.String)
-    trigger_count = db.Column(db.Integer)
-    
-
-    user = db.relationship("User", back_populates="triggers")
+    trigger_name = db.Column(db.String, unique=True)
+    is_default = db.Column(db.Boolean, default = False)
+   
+    users_trigger = db.relationship("UserTrigger", back_populates="trigger")
+ 
 
     def __repr__(self):
         return f"<Trigger trigger_id={self.trigger_id} trigger_name={self.trigger_name}>"
+
+
 
 class Period(db.Model):
     """A period cycle for users who menstruate.""" 
