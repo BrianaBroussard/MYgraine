@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}MYgraine Home{% endblock %}
+
+{% block body %}
+  <h1>Welcome!</h1>
+
+  <h2>What do you think are your common triggers?</h2>
+
+  <form action="/make-users-triggers" method="POST">
+    {% for trigger in triggers %}   
+
+    <input type="checkbox" name="default-triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
+    <label for="{{trigger}}">{{trigger.trigger_name}}</label>
+     {% endfor %}    
+    </select>
+</p>
+
+<p>
+  <input type="submit">
+</p>
+  </form>
+
+ 
+{% endblock %}

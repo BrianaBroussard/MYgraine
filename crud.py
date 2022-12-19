@@ -2,10 +2,10 @@
 
 from model import db, User, Headache, Trigger, Medication, Period, UserTrigger, connect_to_db
 
-def create_user(email, password):
+def create_user(email, password, name, phone_number):
     """Create and return a new user."""
 
-    user = User(email=email, password=password)
+    user = User(email=email, password=password, name=name, phone_number=phone_number)
 
     return user
 
@@ -96,6 +96,33 @@ def get_users_triggers(user_id):
         users_triggers.append(trigger.trigger)
     
     return users_triggers    #returns list of trigger objects for the user
+
+
+def check_trigger_db(trigger_name):
+    """Check if trigger name already in trigger table"""
+    #will return None if not in table, will return Trigger object if it is
+
+    return Trigger.query.filter(Trigger.trigger_name == trigger_name).first()
+
+
+def check_users_triggers(user_id, trigger_id):
+    """Check if trigger already in user's table"""
+
+    return UserTrigger.query.filter(UserTrigger.user_id == user_id, 
+                                               UserTrigger.trigger_id ==trigger_id).first()
+
+
+def get_users_phone():
+    """Returns list of tuples with all user's name and phone number"""
+    
+    users_phone = []
+    query = User.query.all()
+    for user in query:
+        users_phone.append(user.phone_number)
+    
+    return users_phone
+
+   
 
 
 if __name__ == '__main__':

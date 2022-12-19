@@ -14,6 +14,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
+    name = db.Column(db.String)
+    phone_number = db.Column(db.String)
     get_period = db.Column(db.String) #if gets periods
 
     headaches = db.relationship("Headache", back_populates="user")
@@ -62,7 +64,7 @@ class Trigger(db.Model):
     __tablename__ = "triggers"
 
     trigger_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    trigger_name = db.Column(db.String, unique=True)
+    trigger_name = db.Column(db.String) #unique=True) this might cause problems took out for now
     is_default = db.Column(db.Boolean, default = False)
    
     users_trigger = db.relationship("UserTrigger", back_populates="trigger")
