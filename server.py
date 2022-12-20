@@ -206,15 +206,40 @@ def add_trigger():
 
 
     return render_template("log_trigger.html", user = user, users_triggers = users_triggers)
-
+    #there is a bug in this where first time added trigger duplicates
     #might use below if use AJAX call instead 
     #update_trigger_list = {'trigger_name': trigger.trigger_name, 'trigger_id': trigger.trigger_id}
 
     #could return JSON string instead to JS file and reload DOM instead of reloading 
 
 
+@app.route('/users-triggers.json')
+def get_users_triggers_and_count():
+    """Get the user's current triggers and count"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    
+    users_trigger_count_dic = crud.get_users_triggers_with_count(user.user_id)
+    trigger_chart_list = []
 
 
+    for trigger, count in users_trigger_count_dic.items():
+        trigger_chart_list.append({'trigger': trigger, 'count':count})
+    
+    
+    
+    return jsonify({'data': trigger_chart_list})
+
+
+@app.route('/users-date-info.json')
+def get_users_calendar_info():
+    """Get user's headache dates for profile calendar"""
+    
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}MYgraine - dashboard {% endblock %}
 
+{% block head %} 
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+{# randomColor: generate random colors #}
+<script src="https://cdn.jsdelivr.net/npm/randomcolor@0.6.2/randomColor.js"></script>
+
+
+<!-- FullCalendar -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js"></script>
+
+{% endblock %}
+
+
+
+
 {% block body %}
   <h1>{{user.name}} Profile </h1>
 
@@ -25,12 +40,23 @@
   <h2>Your Possible Triggers</h2>
   <div>
     {% for triggername, triggercount in dict_users_triggers.items() %}  
-    {% if triggercount > 0 %}  
+     
     <p> 
         {{triggername}} - {{triggercount}}
     </p>
-    {% endif %}
+   
     {% endfor %}  
   </div>
- 
+
+  <h2> Trigger Chart</h2>
+
+  <canvas id="trigger-chart"></canvas>
+
+  <script src="/static/charts.js"></script>
+
+  <h2>Headache Calendar</h2>
+  <div id='calendar'></div>
+
+  <script src="/static/calendar.js"></script>
+
 {% endblock %}

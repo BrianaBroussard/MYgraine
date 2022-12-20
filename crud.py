@@ -81,7 +81,8 @@ def get_users_triggers_with_count(user_id):
         user_trigger_count = usertrigger.trigger_count
         triggerobject = usertrigger.trigger   #this is the trigger object for the user
         trigger_name = triggerobject.trigger_name
-        trigger_count_dic[trigger_name] = user_trigger_count
+        if user_trigger_count > 0:
+            trigger_count_dic[trigger_name] = user_trigger_count
 
     return trigger_count_dic
 

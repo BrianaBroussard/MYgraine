@@ -39,3 +39,7 @@ medications = ['Zomig',
               'Sumatriptan',
               'Aimovig',
               'Ubrelvy']
+
+
+colors = ['#758bfd', '#17c3b2', '#ee964b', '#eddcd2', '#cddafd',
+                        '#f0efeb', '#dbe7e4', '#d6e2e9', '#fde2e4', '#dfe7fd']
