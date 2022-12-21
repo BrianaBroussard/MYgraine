@@ -232,12 +232,6 @@ def get_users_triggers_and_count():
     return jsonify({'data': trigger_chart_list})
 
 
-@app.route('/users-date-info.json')
-def get_users_calendar_info():
-    """Get user's headache dates for profile calendar"""
-    
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)
 
     
 

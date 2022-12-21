@@ -54,9 +54,29 @@
 
   <script src="/static/charts.js"></script>
 
+
+
   <h2>Headache Calendar</h2>
   <div id='calendar'></div>
 
-  <script src="/static/calendar.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', function() {
+    let calendarEl = document.getElementById('calendar');
+let calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'dayGridMonth', 
+  events: [
+   {% for headache in user.headaches %} 
+   {
+     id: '{{ headache.headache_id }}',
+     title: '{{headache.headache_type}}',
+     start: '{{headache.date_start}}',
+     end: '{{headache.date_end}}',     
+   },
+   {% endfor %}    
+ ],
+});
+calendar.render();
+});
+
+</script>
 
 {% endblock %}
