@@ -70,6 +70,11 @@ def register_user():
     name = request.form.get("name").capitalize()
     password = request.form.get("password")
     phone = "+1" + request.form.get("phone_number")
+    period = request.form.get("period")
+    if period == 'True':
+        get_period = True
+    else:
+        get_period = False
 
     user = crud.get_user_by_email(email)
     if user:
@@ -77,7 +82,7 @@ def register_user():
         return redirect("/")
 
     else:
-        user = crud.create_user(email, password, name, phone)
+        user = crud.create_user(email, password, name, phone, get_period)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Lets get some more info.")
@@ -109,6 +114,7 @@ def log_headache():
     headache_type = request.form.get('headache-type')    
     additional_notes = request.form.get('notes')
     
+
     date_ended = request.form.get('date-end')
     if date_ended:
         date_end = date_ended
@@ -126,6 +132,15 @@ def log_headache():
     db.session.commit()
 
     flash(f"headache successfully logged")
+
+    #if user gets periods
+
+    period_start = request.form.get('period-start')
+
+    if period_start:
+        new_period = crud.create_period(user.user_id, period_start)
+        db.session.add(new_period)
+        db.session.commit()
 
     users_triggers = crud.get_users_triggers(user.user_id)
 

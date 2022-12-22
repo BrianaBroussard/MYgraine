@@ -89,7 +89,19 @@
      end: '{{headache.date_end}}', 
      url: '/headache/{{ headache.headache_id }}',   
    },
-   {% endfor %}    
+   {% endfor %} 
+   
+   {% if user.period  %}
+   {% for period in user.period %} 
+   {
+     id: '{{ period.period_id }}',
+     title: 'Period',
+     description:'Period',
+     start: '{{period.date_start}}',
+      
+   },
+   {% endfor %} 
+     {% endif %}
  ],
       // not sure how to get from this to make a new event
       // select: function(info){

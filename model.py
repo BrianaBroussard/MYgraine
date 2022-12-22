@@ -16,7 +16,7 @@ class User(db.Model):
     password = db.Column(db.String)
     name = db.Column(db.String)
     phone_number = db.Column(db.String)
-    get_period = db.Column(db.String) #if gets periods
+    get_period = db.Column(db.Boolean, default = False) #if gets periods
 
     headaches = db.relationship("Headache", back_populates="user")
     user_triggers = db.relationship("UserTrigger", back_populates="user") #list of user trigger objects

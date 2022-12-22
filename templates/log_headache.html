@@ -42,10 +42,28 @@
         Additional notes: <input type="text" name="notes">
     </p>
 
+
+    <p>
+      {% if user.get_period %}
+      Are you currently on your period?:
+      <input type="checkbox" name="period" value="True" id="periodtrue">
+      <label> yes</label> 
+      <input type="checkbox" name="period" value="False" id="periodfalse">
+      <label> no </label> 
+      
+      <p id="period-yes">
+
+      </p>
+    
+      {% endif %}
+
+    </p>
+
     <p>
       <input type="submit">
     </p>
   </form>
 
+  <script src="/static/js/event_listeners.js"></script>
  
 {% endblock %}

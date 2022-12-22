@@ -2,12 +2,19 @@
 
 from model import db, User, Headache, Trigger, Medication, Period, UserTrigger, connect_to_db
 
-def create_user(email, password, name, phone_number):
+def create_user(email, password, name, phone_number, get_period):
     """Create and return a new user."""
 
-    user = User(email=email, password=password, name=name, phone_number=phone_number)
+    user = User(email=email, password=password, name=name, phone_number=phone_number, get_period=get_period)
 
     return user
+
+def create_period(user_id, date_start):
+    period = Period(user_id=user_id,
+                    date_start=date_start,
+                    )
+    
+    return period
 
 def create_headache(date_start, pain_scale, headache_type, user, date_end, additional_notes=" "):
     """Create and return a new headache."""
@@ -26,7 +33,7 @@ def get_headache_by_id(headache_id):
     """return headache by id"""
     
     return Headache.query.get(headache_id)
-    
+
 
 def create_trigger(trigger_name, is_default = False):
     """Create and return a new trigger"""
@@ -122,6 +129,8 @@ def check_users_triggers(user_id, trigger_id):
 def get_users_phone():
     """Returns list of tuples with all user's name and phone number"""
     
+    #this needs to be made conditional
+
     users_phone = []
     query = User.query.all()
     for user in query:
