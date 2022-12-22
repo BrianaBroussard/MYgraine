@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}MYgraine - Headache {% endblock %}
+
+{% block head %} 
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+  <p>
+    <form action = "/go-to-headache-log">
+        <button type="submit">Add Headache</button>
+    </form>
+  </p>
+
+  <h2>Your Logged Headache - {{headache.headache_type}} </h2>
+  <div>
+      
+    <p> {{headache.headache_type}} - Date: {{headache.date_start}} - {{headache.date_end}} 
+        Pain: {{headache.pain_scale}} / 10
+     {% if headache.additional_notes %}
+      Notes: {{headache.additional_notes}} 
+     {% endif %}
+    </p>
+   
+  </div>
+
+  
+
+  
+
+
+{% endblock %}

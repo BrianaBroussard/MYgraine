@@ -22,6 +22,12 @@ def create_headache(date_start, pain_scale, headache_type, user, date_end, addit
 
     return headache
 
+def get_headache_by_id(headache_id):
+    """return headache by id"""
+    
+    return Headache.query.get(headache_id)
+    
+
 def create_trigger(trigger_name, is_default = False):
     """Create and return a new trigger"""
 

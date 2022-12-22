@@ -232,7 +232,13 @@ def get_users_triggers_and_count():
     return jsonify({'data': trigger_chart_list})
 
 
+@app.route("/headache/<headache_id>")
+def show_headache(headache_id):
+    """show user's headache details"""
 
+    headache = crud.get_headache_by_id(headache_id)
+
+    return render_template("headache_details.html", headache = headache)
     
 
 if __name__ == "__main__":
