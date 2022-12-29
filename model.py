@@ -83,7 +83,7 @@ class Period(db.Model):
     period_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     date_start = db.Column(db.DateTime)
-    date_end = db.Column(db.DateTime)
+    
 
 
     user = db.relationship("User", back_populates="period")

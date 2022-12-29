@@ -62,13 +62,16 @@
   <h2>Headache Calendar</h2>
   <div id='calendar'></div>
 
-  <script>document.addEventListener('DOMContentLoaded', function() {
+  <script>
+
+  
+  document.addEventListener('DOMContentLoaded', function() {
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth', 
-      selectable: true,
+ 
       
-
+      // this isnt working probably because of bootstrap
       eventDidMount: function(info) {
       let tooltip = new Tooltip(info.el, {
         title: info.event.extendedProps.description,
@@ -103,12 +106,16 @@
    {% endfor %} 
      {% endif %}
  ],
-      // not sure how to get from this to make a new event
-      // select: function(info){
-      //     let eventDate = info.startStr; 
-      //     console.log(eventDate);
-        
-    //},
+ selectable: true,
+    select: function(info){
+      //   // set value of headache date to the date user clicks on
+    let headacheModal = new bootstrap.Modal(document.getElementById('add_headache'))
+      start = info.startStr;
+      //need to put this id in headache form
+      //document.querySelector('#log-date').value = start;
+      headacheModal.show();
+      }
+
 });
 calendar.render();
 });

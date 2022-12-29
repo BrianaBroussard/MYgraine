@@ -18,31 +18,40 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def homepage():
     """View homepage"""
-    #if session.get("user_email"):
-    #    return redirect(("/user_dashboard"))
+    if session.get("user_email"):
+        return redirect(("/user_dashboard"))
 
     return render_template('index.html')
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET", "POST"])
 def process_login():
-    """Process user login."""
+    """View login page and process user login."""
+    
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
 
-    email = request.form.get("email")
-    password = request.form.get("password")
+        user = crud.get_user_by_email(email)
+        if not user or user.password != password:
+            flash("The email or password you entered was incorrect.")
+        else:
+            # Log in user by storing the user's email in session
+            session["user_email"] = user.email
+            flash(f"Welcome back, {user.email}!")
 
-    user = crud.get_user_by_email(email)
-    if not user or user.password != password:
-        flash("The email or password you entered was incorrect.")
-    else:
-        # Log in user by storing the user's email in session
-        session["user_email"] = user.email
-        flash(f"Welcome back, {user.email}!")
-
-        return redirect("/user_dashboard")
+            return redirect("/user_dashboard")
         
 
-    return redirect("/")
+    return render_template("login.html")
+
+
+@app.route("/logout")
+def process_logout():
+    """Log user out and clear the session."""
+
+    del session["user_email"]
+    return redirect("/")    
 
 
 @app.route("/user_dashboard")
