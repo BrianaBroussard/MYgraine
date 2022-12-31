@@ -1,6 +1,5 @@
-"""Models for migraine tracking app."""
+"""Models for MYgraine tracking app."""
 
-from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -38,12 +37,31 @@ class Headache(db.Model):
     headache_type = db.Column(db.String)
     additional_notes = db.Column(db.Text)
 
+    #for users with periods, if True user has period concurrent with headache
+    on_period = db.Column(db.Boolean, default = False)
+
     user = db.relationship("User", back_populates="headaches")
-    medications = db.relationship("Medication", back_populates="headaches")
+    headache_trigger = db.relationship("HeadacheTrigger", back_populates="headache")
+
+    #medications = db.relationship("Medication", back_populates="headaches")
 
     def __repr__(self):
         return f"<Headache headache_id={self.headache_id} type={self.headache_type}>"
 
+
+class HeadacheTrigger(db.Model):
+
+    __tablename__ = 'headaches_triggers'
+
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"), nullable=False)
+    trigger_id = db.Column(db.Integer, db.ForeignKey("triggers.trigger_id"), nullable=False)
+
+    headache = db.relationship("Headache", back_populates="headache_trigger")
+    trigger = db.relationship("Trigger", back_populates="headache_trigger")
+
+    def __repr__(self):
+        return f"<Headache's triggers headache_id={self.headache_id} trigger_id={self.trigger_id}>"
 
 class UserTrigger(db.Model):
 
@@ -68,6 +86,7 @@ class Trigger(db.Model):
     is_default = db.Column(db.Boolean, default = False)
    
     users_trigger = db.relationship("UserTrigger", back_populates="trigger")
+    headache_trigger = db.relationship("HeadacheTrigger", back_populates="trigger")
  
 
     def __repr__(self):
@@ -84,28 +103,26 @@ class Period(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     date_start = db.Column(db.DateTime)
     
-
-
     user = db.relationship("User", back_populates="period")
 
     def __repr__(self):
         return f"<Period period_id={self.period_id} start_date={self.date_start}>"
 
 
-class Medication(db.Model):
+#class Medication(db.Model):
     """A medication""" 
 
-    __tablename__ = "medications"
+#    __tablename__ = "medications"
 
-    medication_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"))
-    med_name = db.Column(db.String)
-    efficacy = db.Column(db.String)
+#    medication_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"))
+#    med_name = db.Column(db.String)
+#    efficacy = db.Column(db.String)
     
-    headaches = db.relationship("Headache", back_populates="medications")
+#    headaches = db.relationship("Headache", back_populates="medications")
 
-    def __repr__(self):
-        return f"<Medication medication_id={self.medication_id} med_name={self.med_name}>"
+#    def __repr__(self):
+#        return f"<Medication medication_id={self.medication_id} med_name={self.med_name}>"
 
 
 

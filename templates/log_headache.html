@@ -2,18 +2,18 @@
 {% block title %}MYgraine - dashboard {% endblock %}
 
 {% block body %}
-  <h1>{{user.email}} </h1>
+  <h1>{{user.name}} </h1>
 
   <h2>Log a new headache</h2>
   <form action="/log-headache" method="POST">
     <p>
         <label for="date-start">Headache Started:</label>
 
-        <input id="date-start" type="datetime-local" name="date-start" />
+        <input id="date-start" type="datetime-local" name="date-start" required/>
     </p>
 
     <p>
-        <label for="date-end">Headache Ended</label>
+        <label for="date-end">Headache Ended:</label>
 
         <input id="date-end" type="datetime-local" name="date-end" />
     </p>
@@ -39,33 +39,50 @@
     </p>
 
     <p>
-        Additional notes: <input type="text" name="notes">
+        Additional notes: <input type="text" name="notes" placeholder="Started above my eye" >
     </p>
 
 
     <p>
+      
       {% if user.get_period %}
-      Are you currently on your period?:
+      Are you currently on your period?
       <input type="checkbox" name="period" value="True" id="periodtrue">
       <label> yes</label> 
       <input type="checkbox" name="period" value="False" id="periodfalse">
       <label> no </label> 
 
-      <form>
-      <button type="submit" id="perioddate">Log Date</button>
-      </form>
+     
+      <button id="perioddate">Log Date</button>
+      
       <p id="period-date">
-
       </p>
     
       {% endif %}
 
     </p>
 
+    <h2>Log Any Potential Triggers</h2>
+   
+     
+         <p> <label for="trigger-name">Select potential triggers:</label> </p> 
+      <p>
+          {% for trigger in users_triggers %}    
+          <input type="checkbox" name="triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
+          <label for="{{trigger}}">{{trigger.trigger_name}}</label>
+           {% endfor %}    
+           <p id="new-trigger"></p>
+          </select>
+          <input for="add-trigger"type="text" name="add-trigger" id="add-trigger">
+          <button id="add-trigger-button">Add Trigger</button>
+      </p>
+  
     <p>
-      <input type="submit">
+      <button type="submit" >Log Headache</button>
     </p>
   </form>
+
+
 
   <script src="/static/js/event_listeners.js"></script>
  

@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Headache, Trigger, Medication, Period, UserTrigger, connect_to_db
+from model import db, User, Headache, Trigger, Period, UserTrigger, HeadacheTrigger, connect_to_db
 
 def create_user(email, password, name, phone_number, get_period):
     """Create and return a new user."""
@@ -16,7 +16,7 @@ def create_period(user_id, date_start):
     
     return period
 
-def create_headache(date_start, pain_scale, headache_type, user, date_end, additional_notes=" "):
+def create_headache(date_start, pain_scale, headache_type, user, date_end, additional_notes=" ", on_period = False):
     """Create and return a new headache."""
 
     headache = Headache(date_start=date_start, 
@@ -25,6 +25,7 @@ def create_headache(date_start, pain_scale, headache_type, user, date_end, addit
                   user = user,
                   date_end = date_end,
                   additional_notes = additional_notes,
+                  on_period = on_period
                 )
 
     return headache
@@ -33,6 +34,25 @@ def get_headache_by_id(headache_id):
     """return headache by id"""
     
     return Headache.query.get(headache_id)
+
+def create_headache_trigger(headache_id, trigger_id):
+    """Create headache_trigger object to link logged triggers to logged headache"""
+
+    headache_trigger = HeadacheTrigger(headache_id = headache_id, trigger_id = trigger_id)
+    db.session.add(headache_trigger)
+    db.session.commit()
+
+def get_triggers_for_headache(headache_id):
+    """get triggers by headache"""
+    headache = get_headache_by_id(headache_id)
+    headache_triggers = headache.headache_trigger
+    
+    trigger_lst = []
+
+    for headache_triggers in headache_triggers:
+        trigger_lst.append(Trigger.query.get(headache_triggers.trigger_id))
+
+    return trigger_lst
 
 
 def create_trigger(trigger_name, is_default = False):

@@ -22,6 +22,7 @@
 {% block body %}
   <h1>{{user.name}} Profile </h1>
 
+
   <p>
     <form action = "/go-to-headache-log">
         <button type="submit">Add Headache</button>
@@ -72,8 +73,8 @@
  
       
       // this isnt working probably because of bootstrap
-      eventDidMount: function(info) {
-      let tooltip = new Tooltip(info.el, {
+    eventDidMount: function(info) {
+    let tooltip = new Tooltip(info.el, {
         title: info.event.extendedProps.description,
         placement: 'top',
         trigger: 'hover',
