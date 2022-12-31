@@ -63,11 +63,88 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          ...
+                          <form action="/log-headache" method="POST">
+                            <p>
+                                <label for="date-start">Headache Started:<span style="color: red">*</span></label>
+                        
+                                <input id="date-start" type="date" name="date-start" required/>
+                            </p>
+                            <p> 
+                              <label for="date-start">Time Started:</label>
+                              <input id="time-start" type="time" name="time-start" /></p>
+                            <p>
+                                <label for="date-end">Headache Ended:</label>
+                        
+                                <input id="date-end" type="date" name="date-end" />
+                            </p>
+                        
+                            <p>
+                                <label for="pain-scale">Rate your pain:</label>
+                        
+                                <select name="pain-scale" id="pain-scale">
+                                {% for num in range(11) %}    
+                                 <option value="{{num}}">{{num}}</option>
+                                 {% endfor %}    
+                                </select>
+                            </p>
+                        
+                            <p>
+                                <label for="headache-type">What is the type of headache:</label>
+                        
+                                <select name="headache-type" id="headache-type">
+                                {% for type in headache_type %}    
+                                 <option value="{{type}}">{{type}}</option>
+                                 {% endfor %}    
+                                </select>
+                            </p>
+                        
+                            <p>
+                                Additional notes: <input type="text" name="notes" placeholder="Started above my eye" >
+                            </p>
+                        
+                        
+                            <p>
+                              
+                              {% if user.get_period %}
+                              Are you currently on your period?
+                              <input type="checkbox" name="period" value="True" id="periodtrue">
+                              <label> yes</label> 
+                              <input type="checkbox" name="period" value="False" id="periodfalse">
+                              <label> no </label> 
+                        
+                             
+                              <button id="perioddate">Log Date</button>
+                              
+                              <p id="period-date">
+                              </p>
+                            
+                              {% endif %}
+                        
+                            </p>
+                        
+                            <h2>Log Any Potential Triggers</h2>
+                           
+                             
+                                 <p> <label for="trigger-name">Select potential triggers:</label> </p> 
+                              <p>
+                                  {% for trigger in users_triggers %}    
+                                  <input type="checkbox" name="triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
+                                  <label for="{{trigger}}">{{trigger.trigger_name}}</label>
+                                   {% endfor %}    
+                                   <p id="new-trigger"></p>
+                                  </select>
+                                  <input for="add-trigger"type="text" name="add-trigger" id="add-trigger">
+                                  <button id="add-trigger-button">Add Trigger</button>
+                              </p>
+                          
+                            <p>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Log Headache</button>
+                            </p>
+                          </form>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save changes</button>
+                          <p><span style="color: red">*</span>required field</p>
                         </div>
                       </div>
                     </div>
@@ -105,5 +182,6 @@
      <!-- Bootstrap JavaScript Bundle with Popper (a Bootstrap dependency for popovers) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
+    <script src="/static/js/event_listeners.js"></script>
   </body>
 </html>

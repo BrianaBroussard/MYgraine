@@ -62,8 +62,13 @@ def show_user_dashboard():
     user = crud.get_user_by_email(logged_in_email)
 
     dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
+    users_triggers = crud.get_users_triggers(user.user_id)
 
-    return render_template("user_profile.html", user = user, dict_users_triggers = dict_users_triggers )
+    return render_template("user_profile.html", 
+                            user = user, 
+                            dict_users_triggers = dict_users_triggers,
+                             headache_type = headache_type,
+                             users_triggers = users_triggers )
 
 @app.route("/sign-up")
 def show_sign_up_form():
@@ -102,18 +107,18 @@ def register_user():
     return render_template("create_triggers.html", user = user, triggers = triggers)
 
 
-@app.route("/go-to-headache-log")
-def see_headache_log():
-    """button route to render headache log form"""
+#@app.route("/go-to-headache-log")
+#def see_headache_log():
+    """button route to render headache log form""" #replaced with modal
     
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)
-    users_triggers = crud.get_users_triggers(user.user_id)
+#    logged_in_email = session.get("user_email")
+#    user = crud.get_user_by_email(logged_in_email)
+#    users_triggers = crud.get_users_triggers(user.user_id)
 
-    return render_template('log_headache.html', 
-                            user = user, 
-                            headache_type = headache_type, 
-                            users_triggers = users_triggers)
+#    return render_template('log_headache.html', 
+#                            user = user, 
+#                            headache_type = headache_type, 
+#                            users_triggers = users_triggers)
 
 
 @app.route("/log-headache", methods=["POST"])
@@ -123,6 +128,7 @@ def log_headache():
 
     user = crud.get_user_by_email(logged_in_email)
     date_start = request.form.get('date-start')
+    
     pain_scale = request.form.get('pain-scale')
     headache_type = request.form.get('headache-type')    
     additional_notes = request.form.get('notes')
@@ -141,6 +147,11 @@ def log_headache():
         date_end = date_ended
     else:
         date_end = date_start
+
+    time_start = request.form.get('time-start')
+    if time_start:
+        date_start = date_start + " " + time_start
+
 
     headache = crud.create_headache(date_start,
                                     int(pain_scale),
@@ -266,7 +277,13 @@ def show_headache(headache_id):
     for trigger in triggers:
         trigger_names.append(trigger.trigger_name)
 
-    return render_template("headache_details.html", headache = headache, user=user, triggers = trigger_names)
+    users_triggers = crud.get_users_triggers(user.user_id)
+    return render_template("headache_details.html",
+                             headache = headache, 
+                             user=user, 
+                             triggers = trigger_names,
+                             headache_type = headache_type,
+                             users_triggers = users_triggers)
     
 
 if __name__ == "__main__":

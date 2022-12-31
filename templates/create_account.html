@@ -6,19 +6,19 @@
 
   <form action="/users" method="POST">
     <p>
-      Email <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+      Email<span style="color: red">*</span>  <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
     </p>
 
     <p>
-      Name <input type="name" name="name"placeholder="Your Name" required>
+      Name<span style="color: red">*</span>  <input type="name" name="name"placeholder="Your Name" required>
     </p>
 
     <p>
-        Password <input type="password" name="password" placeholder="Password" required>
+        Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
       </p>
 
       <p>
-        Phone Number<input type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
+        Phone Number<span style="color: red">*</span>  <input type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
       </p>
 
       <p>

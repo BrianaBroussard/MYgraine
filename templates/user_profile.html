@@ -22,7 +22,7 @@
 {% block body %}
   <h1>{{user.name}} Profile </h1>
 
-
+<!-- I think this button can be deleted now?-->
   <p>
     <form action = "/go-to-headache-log">
         <button type="submit">Add Headache</button>
@@ -112,8 +112,8 @@
       //   // set value of headache date to the date user clicks on
     let headacheModal = new bootstrap.Modal(document.getElementById('add_headache'))
       start = info.startStr;
-      //need to put this id in headache form
-      //document.querySelector('#log-date').value = start;
+      console.log(start);
+      document.querySelector('#date-start').value = start;
       headacheModal.show();
       }
 
