@@ -13,22 +13,14 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js"></script>
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
-
-
 {% endblock %}
-
-
 
 {% block body %}
   <h1>{{user.name}} Profile </h1>
 
-<!-- I think this button can be deleted now?-->
-  <p>
-    <form action = "/go-to-headache-log">
-        <button type="submit">Add Headache</button>
-    </form>
-  </p>
-
+<div class="container">
+  <div class="row">
+    <div class="col-8"> 
   <h2>Your Logged Headaches</h2>
   <div>
     {% for headache in user.headaches %}    
@@ -40,7 +32,9 @@
     </p>
     {% endfor %}  
   </div>
+</div>
 
+<div class="col-4"> 
   <h2>Your Possible Triggers</h2>
   <div>
     {% for triggername, triggercount in dict_users_triggers.items() %}  
@@ -51,21 +45,32 @@
    
     {% endfor %}  
   </div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-6"> 
 
   <h2> Trigger Chart</h2>
 
   <canvas id="trigger-chart"></canvas>
 
-  <script src="/static/js/charts.js"></script>
+  
+  </div>
 
-
-
+  <div class="col-6">
   <h2>Headache Calendar</h2>
   <div id='calendar'></div>
+  </div>
+  </div>
+</div>
 
+
+<!-- Charts.js -->
+  <script src="/static/js/charts.js"></script>
+
+  <!-- FullCalendar -->
   <script>
-
-  
   document.addEventListener('DOMContentLoaded', function() {
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
@@ -122,5 +127,6 @@ calendar.render();
 });
 
 </script>
+
 
 {% endblock %}

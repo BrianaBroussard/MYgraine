@@ -6,6 +6,8 @@ from flask import (Flask, render_template, request, flash, session,
 from model import connect_to_db, db
 import crud
 from constants import headache_type
+from statistics import mode 
+from datetime import datetime
 
 from jinja2 import StrictUndefined
 
@@ -284,7 +286,50 @@ def show_headache(headache_id):
                              triggers = trigger_names,
                              headache_type = headache_type,
                              users_triggers = users_triggers)
+
+
+
+@app.route("/user-headache-stats.json")
+def user_headache_stats():
+    """logic for user's headaches data summary"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+
+    number_of_headaches = len(user.headaches)
     
+    pain_lst = []
+    HA_type_lst = []
+    HA_dates = []
+    
+    #for users with periods
+    HA_on_period = []
+
+    for headache in user.headaches:
+        pain_lst.append(headache.pain_scale)
+        HA_type_lst.append(headache.headache_type)
+        HA_dates.append(headache.date_end)
+        if headache.on_period:
+            HA_on_period.append(headache)
+
+    
+    avg_pain = sum(pain_lst)/len(pain_lst)
+    max_pain = max(pain_lst)
+    most_common_type = mode(HA_type_lst)
+
+    #for users with periods
+    percent_on_period = (len(HA_on_period)/len(user.headaches)) * 100
+
+    # datetime object containing current date and time
+    now = datetime.now()
+    most_recent_HA = max(HA_dates)
+    time_since_most_recent = now - most_recent_HA
+
+
+    
+
+   
+
 
 if __name__ == "__main__":
     connect_to_db(app)
