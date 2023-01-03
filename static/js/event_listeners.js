@@ -1,16 +1,5 @@
 'use strict';
 
-// adds period date if add date is selected on headache form
-const period_button = document.querySelector('#perioddate');
-
-period_button.addEventListener('click', (evt) => {
-    evt.preventDefault();
-
-    document.querySelector('#period-date').insertAdjacentHTML('beforeend', 
-    '<label for="date-start">When did your last period start?</label> <input id="period-start" type="datetime-local" name="period-start" />');
-});
-
-
 // adds trigger button if user clicks
 const add_trigger_button = document.querySelector('#add-trigger-button');
 
@@ -44,3 +33,12 @@ add_trigger_button.addEventListener('click', (event) => {
 });
 
 
+// adds period date if add date is selected on headache form
+const period_button = document.querySelector('#perioddate');
+
+period_button.addEventListener('click', (evt) => {
+    evt.preventDefault();
+
+    document.querySelector('#period-date').insertAdjacentHTML('beforeend', 
+    '<label for="date-start">When did your last period start?</label> <input id="period-start" type="datetime-local" name="period-start" />');
+});

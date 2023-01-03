@@ -146,6 +146,13 @@ def check_users_triggers(user_id, trigger_id):
                                                UserTrigger.trigger_id ==trigger_id).first()
 
 
+def most_common_triggers(freq_dict, n):
+    """find the nth most common value in dict"""
+
+    nth_most_common = sorted(freq_dict.values(), reverse=True)[n-1]
+    return { k: v for k, v in freq_dict.items() if v >= nth_most_common }
+    
+
 def get_users_phone():
     """Returns list of tuples with all user's name and phone number"""
     

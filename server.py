@@ -63,14 +63,79 @@ def show_user_dashboard():
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
 
-    dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
     users_triggers = crud.get_users_triggers(user.user_id)
+
+    # headache summery logic
+    number_of_headaches = len(user.headaches)
+    
+    pain_lst = []
+    HA_type_lst = []
+    HA_dates = []
+    
+    #for users with periods
+    HA_on_period = []
+
+    for headache in user.headaches:
+        HA_type_lst.append(headache.headache_type)
+        HA_dates.append(headache.date_end)
+        if headache.pain_scale > 0:
+            pain_lst.append(headache.pain_scale)
+        if headache.on_period:
+            HA_on_period.append(headache)
+
+    if len(pain_lst) > 0:
+        avg_pain = (round(sum(pain_lst)/len(pain_lst), 2))
+        max_pain = max(pain_lst)
+    else:
+        avg_pain = None
+        max_pain = None    
+    if len(HA_type_lst) > 0:    
+        most_common_type = mode(HA_type_lst)
+    else:
+        most_common_type = None
+
+
+    #for users with periods
+    if len(HA_on_period) > 0:
+        percent_on_period = (round((len(HA_on_period)/len(user.headaches)) * 100,2))
+    else:
+        percent_on_period = None
+
+    # datetime object containing current date and time
+    now = datetime.now()
+    if number_of_headaches > 0: 
+        most_recent_HA = max(HA_dates)
+        time_since_most_recent = now - most_recent_HA
+    else:
+        most_recent_HA = None
+        time_since_most_recent = None
+
+    #top three user's triggers
+    dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
+
+    if len(dict_users_triggers) >= 3:
+        top_triggers = crud.most_common_triggers(dict_users_triggers,3)
+    elif len(dict_users_triggers) < 3:
+        top_triggers = dict_users_triggers
+    else:
+        top_triggers = None
+     
+
 
     return render_template("user_profile.html", 
                             user = user, 
                             dict_users_triggers = dict_users_triggers,
-                             headache_type = headache_type,
-                             users_triggers = users_triggers )
+                            top_triggers = top_triggers,
+                            headache_type = headache_type,
+                            users_triggers = users_triggers,
+                            number_of_headaches = number_of_headaches,
+                            avg_pain = avg_pain,
+                            max_pain = max_pain,
+                            most_common_type = most_common_type,
+                            percent_on_period = percent_on_period,
+                            time_since_most_recent = time_since_most_recent
+                             )
+
 
 @app.route("/sign-up")
 def show_sign_up_form():
@@ -106,7 +171,10 @@ def register_user():
 
     triggers = crud.show_all_default_triggers()
                 
-    return render_template("create_triggers.html", user = user, triggers = triggers)
+    return render_template("create_triggers.html",
+                            user = user, 
+                            triggers = triggers,
+                            headache_type = headache_type)
 
 
 #@app.route("/go-to-headache-log")
@@ -132,6 +200,7 @@ def log_headache():
     date_start = request.form.get('date-start')
     
     pain_scale = request.form.get('pain-scale')
+
     headache_type = request.form.get('headache-type')    
     additional_notes = request.form.get('notes')
 
