@@ -22,11 +22,30 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <link rel="stylesheet"href="/static/css/carousel.css">
+
+
+    <!--jQuery-->
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
+<script>  
+  $(function() {  
+     $( "#add-trigger" ).autocomplete({  
+        source: [  
+           { label: "Daisy", value: "DAS" },  
+             { label: "Dandelion", value: "DAD" },  
+               { label: "Daffodil", value: "DAF" },  
+                 { label: "Dahlia", value: "DAH" },  
+           { label: "Desert Rose", value: "DER" }  
+        ]  
+     });  
+  });  
+</script>  
 {% endblock %}
 
 {% block body %}
   <h1>{{user.name}} Profile </h1>
-
+ 
 
 <div class="container">
   <div class="row">
@@ -174,6 +193,7 @@
   </div>
   </div>
 </div>
+
 
 
 <!-- Charts.js -->
