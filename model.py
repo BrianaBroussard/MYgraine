@@ -15,6 +15,7 @@ class User(db.Model):
     password = db.Column(db.String)
     name = db.Column(db.String)
     phone_number = db.Column(db.String)
+    scheduled_reminder = db.Column(db.Time, default=None)
     get_period = db.Column(db.Boolean, default = False) #if gets periods
 
     headaches = db.relationship("Headache", back_populates="user")
@@ -84,6 +85,7 @@ class Trigger(db.Model):
     trigger_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     trigger_name = db.Column(db.String) #unique=True) this might cause problems took out for now
     is_default = db.Column(db.Boolean, default = False)
+    icon = db.Column(db.String)
    
     users_trigger = db.relationship("UserTrigger", back_populates="trigger")
     headache_trigger = db.relationship("HeadacheTrigger", back_populates="trigger")

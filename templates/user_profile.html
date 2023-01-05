@@ -20,6 +20,7 @@
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <link rel="stylesheet"href="/static/css/carousel.css">
 {% endblock %}
 
@@ -27,6 +28,9 @@
   <h1>{{user.name}} Profile </h1>
 
 
+<div class="container">
+  <div class="row">
+    <div class="col-7">   
 <!-- Headache Carousel-->
 <div id="carouselHeadacheSummary" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
@@ -69,16 +73,24 @@
 
     {% if top_triggers != None %}
     <div class="carousel-item">
+      <img class="d-block w-100" src="/static/img/Carousel3.jpg" alt="Third slide">
+      <div class="carousel-caption">
+        <h5>{{user.name}}'s Most Logged Triggers</h5>
+        
+        {% for triggername, triggercount in top_triggers.items() %}  
+        <p> 
+            {{triggername}} - you logged {{triggercount}} times
+        </p>
+        {% endfor %}
+
+      </div>
+  </div>
+  {% else %}
+    <div class="carousel-item">
         <img class="d-block w-100" src="/static/img/Carousel3.jpg" alt="Third slide">
         <div class="carousel-caption">
-
-          <h5>{{user.name}}'s Most Logged Triggers</h5>
-        
-          {% for triggername, triggercount in top_triggers.items() %}  
-          <p> 
-              {{triggername}} - you logged {{triggercount}} times
-          </p>
-          {% endfor %}
+          <h5>{{user.name}}'s You Haven't Logged Any Triggers Yet</h5>
+         
         </div>
     </div>
     {% endif %}
@@ -102,6 +114,17 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
   </a>
+</div>
+    </div>
+     <div class="col-5">
+      <a class="nav-link" href="/user_calendar">
+        Calendar
+      </a>
+      <a class="nav-link" href="/user_charts">
+        Charts
+      </a>
+     </div>
+  </div>
 </div>
 
 

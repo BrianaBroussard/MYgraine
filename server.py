@@ -8,6 +8,7 @@ import crud
 from constants import headache_type
 from statistics import mode 
 from datetime import datetime
+import humanize
 
 from jinja2 import StrictUndefined
 
@@ -105,7 +106,7 @@ def show_user_dashboard():
     now = datetime.now()
     if number_of_headaches > 0: 
         most_recent_HA = max(HA_dates)
-        time_since_most_recent = now - most_recent_HA
+        time_since_most_recent = humanize.precisedelta((now - most_recent_HA),minimum_unit="minutes",format="%0.0f")
     else:
         most_recent_HA = None
         time_since_most_recent = None
@@ -117,11 +118,12 @@ def show_user_dashboard():
         top_triggers = crud.most_common_triggers(dict_users_triggers,3)
     elif len(dict_users_triggers) < 3:
         top_triggers = dict_users_triggers
+        if len(dict_users_triggers) == 0:
+            top_triggers = None
     else:
         top_triggers = None
+    
      
-
-
     return render_template("user_profile.html", 
                             user = user, 
                             dict_users_triggers = dict_users_triggers,
@@ -135,6 +137,37 @@ def show_user_dashboard():
                             percent_on_period = percent_on_period,
                             time_since_most_recent = time_since_most_recent
                              )
+
+
+@app.route("/user_calendar")
+def show_user_calendar():
+    """route to render user's calendar"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    users_triggers = crud.get_users_triggers(user.user_id)
+
+    return render_template("user_calendar.html", 
+                            user = user,
+                            users_triggers = users_triggers, 
+                            headache_type = headache_type
+                            )
+
+@app.route("/user_charts")
+def show_user_charts():
+    """route to render user's charts"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    users_triggers = crud.get_users_triggers(user.user_id)
+    dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
+
+    return render_template("user_charts.html", 
+                            user = user,
+                            users_triggers = users_triggers, 
+                            headache_type = headache_type,
+                            dict_users_triggers = dict_users_triggers
+                            )
 
 
 @app.route("/sign-up")
@@ -151,6 +184,13 @@ def register_user():
     name = request.form.get("name").capitalize()
     password = request.form.get("password")
     phone = "+1" + request.form.get("phone_number")
+    wants_notifications = request.form.get("notifications")
+
+    if wants_notifications == "True":
+        scheduled_reminder = request.form.get("scheduled-reminder")
+    else:
+        scheduled_reminder = None
+
     period = request.form.get("period")
     if period == 'True':
         get_period = True
@@ -163,7 +203,7 @@ def register_user():
         return redirect("/")
 
     else:
-        user = crud.create_user(email, password, name, phone, get_period)
+        user = crud.create_user(email, password, name, phone, scheduled_reminder, get_period)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Lets get some more info.")
@@ -175,20 +215,6 @@ def register_user():
                             user = user, 
                             triggers = triggers,
                             headache_type = headache_type)
-
-
-#@app.route("/go-to-headache-log")
-#def see_headache_log():
-    """button route to render headache log form""" #replaced with modal
-    
-#    logged_in_email = session.get("user_email")
-#    user = crud.get_user_by_email(logged_in_email)
-#    users_triggers = crud.get_users_triggers(user.user_id)
-
-#    return render_template('log_headache.html', 
-#                            user = user, 
-#                            headache_type = headache_type, 
-#                            users_triggers = users_triggers)
 
 
 @app.route("/log-headache", methods=["POST"])
@@ -298,22 +324,27 @@ def add_trigger():
 
         trigger_name = trigger.trigger_name
         trigger_id = trigger.trigger_id
-    
+        trigger_icon = trigger.icon 
+
         crud.add_trigger_for_user(user.user_id, trigger.trigger_id)
-        db.session.commit()   
+        db.session.commit()  
+        
         status = "Trigger successfully added" 
     else:
         if crud.check_users_triggers(user.user_id, new_trigger.trigger_id) == None:
             crud.add_trigger_for_user(user.user_id, new_trigger.trigger_id)
             trigger_name = new_trigger.trigger_name
             trigger_id = new_trigger.trigger_id
+            trigger_icon = new_trigger.icon
             status = "Trigger successfully added"
         else:
             status = "Error"
             trigger_name = new_trigger.trigger_name
-            trigger_id = new_trigger.trigger_id           
+            trigger_id = new_trigger.trigger_id 
+            trigger_icon = new_trigger.icon          
     
-    return jsonify({'trigger_name': trigger_name, 'trigger_id': trigger_id, "status": status})
+    
+    return jsonify({'trigger_name': trigger_name, 'trigger_id': trigger_id, 'trigger_icon': trigger_icon, 'status': status})
 
 
 
@@ -357,42 +388,16 @@ def show_headache(headache_id):
                              users_triggers = users_triggers)
 
 
-
-@app.route("/user-headache-stats.json")
-def user_headache_stats():
-    """logic for user's headaches data summary"""
-
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)
-
-    number_of_headaches = len(user.headaches)
+@app.route("/delete-headache/<headache_id>")
+def delete_headache(headache_id):
+    """button to delete headache""" 
     
-    pain_lst = []
-    HA_type_lst = []
-    HA_dates = []
-    
-    #for users with periods
-    HA_on_period = []
+    headache = crud.get_headache_by_id(headache_id)
+    db.session.delete(headache)
+    db.session.commit()
+    flash("Headache Deleted")
 
-    for headache in user.headaches:
-        pain_lst.append(headache.pain_scale)
-        HA_type_lst.append(headache.headache_type)
-        HA_dates.append(headache.date_end)
-        if headache.on_period:
-            HA_on_period.append(headache)
-
-    
-    avg_pain = sum(pain_lst)/len(pain_lst)
-    max_pain = max(pain_lst)
-    most_common_type = mode(HA_type_lst)
-
-    #for users with periods
-    percent_on_period = (len(HA_on_period)/len(user.headaches)) * 100
-
-    # datetime object containing current date and time
-    now = datetime.now()
-    most_recent_HA = max(HA_dates)
-    time_since_most_recent = now - most_recent_HA
+    return redirect("/user_dashboard")
 
 
     

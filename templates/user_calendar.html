@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}MYgraine - dashboard {% endblock %}
+
+{% block head %} 
+<!-- FullCalendar -->
+<link rel="stylesheet"href="/static/css/calendar.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js"></script>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+
+{% endblock %}
+
+{% block body %}
+  <h1>{{user.name}} Profile </h1>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-6"> 
+
+        <div class="col-6">
+        <h2>Headache Calendar</h2>
+             <div id='calendar'></div>
+        </div>
+    </div>
+</div>
+
+
+
+  <!-- FullCalendar -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    let calendarEl = document.getElementById('calendar');
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth', 
+ 
+      
+      // this isnt working probably because of bootstrap
+    eventDidMount: function(info) {
+    let tooltip = new Tooltip(info.el, {
+        title: info.event.extendedProps.description,
+        placement: 'top',
+        trigger: 'hover',
+        container: 'body'
+      });
+    },
+
+
+  events: [
+   {% for headache in user.headaches %} 
+   {
+     id: '{{ headache.headache_id }}',
+     title: '{{headache.headache_type}} Headache',
+     description:'{{headache.headache_type}} Headache Pain:{{headache.pain_scale}}/10',
+     start: '{{headache.date_start}}',
+     end: '{{headache.date_end}}', 
+     url: '/headache/{{ headache.headache_id }}',   
+   },
+   {% endfor %} 
+   
+   {% if user.period  %}
+   {% for period in user.period %} 
+   {
+     id: '{{ period.period_id }}',
+     title: 'Period',
+     description:'Period',
+     start: '{{period.date_start}}',
+      
+   },
+   {% endfor %} 
+     {% endif %}
+ ],
+ selectable: true,
+    select: function(info){
+      //   // set value of headache date to the date user clicks on
+    let headacheModal = new bootstrap.Modal(document.getElementById('add_headache'))
+      start = info.startStr;
+      console.log(start);
+      document.querySelector('#date-start').value = start;
+      headacheModal.show();
+      }
+
+});
+calendar.render();
+});
+
+</script>
+
+
+
+{% endblock %}

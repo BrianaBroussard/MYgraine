@@ -2,10 +2,15 @@
 
 from model import db, User, Headache, Trigger, Period, UserTrigger, HeadacheTrigger, connect_to_db
 
-def create_user(email, password, name, phone_number, get_period):
+def create_user(email, password, name, phone_number,scheduled_reminder, get_period):
     """Create and return a new user."""
 
-    user = User(email=email, password=password, name=name, phone_number=phone_number, get_period=get_period)
+    user = User(email=email, 
+                password=password,
+                name=name,
+                phone_number=phone_number,
+                scheduled_reminder = scheduled_reminder,
+                get_period=get_period)
 
     return user
 
@@ -55,10 +60,10 @@ def get_triggers_for_headache(headache_id):
     return trigger_lst
 
 
-def create_trigger(trigger_name, is_default = False):
+def create_trigger(trigger_name, icon = "psychology", is_default = False):
     """Create and return a new trigger"""
 
-    trigger = Trigger(trigger_name=trigger_name, is_default = is_default)
+    trigger = Trigger(trigger_name=trigger_name, icon = icon, is_default = is_default)
                       
     return trigger
 
@@ -153,17 +158,6 @@ def most_common_triggers(freq_dict, n):
     return { k: v for k, v in freq_dict.items() if v >= nth_most_common }
     
 
-def get_users_phone():
-    """Returns list of tuples with all user's name and phone number"""
-    
-    #this needs to be made conditional
-
-    users_phone = []
-    query = User.query.all()
-    for user in query:
-        users_phone.append(user.phone_number)
-    
-    return users_phone
 
    
 

@@ -26,11 +26,16 @@ add_trigger_button.addEventListener('click', (event) => {
         alert(responseJson.status);    
         let trigger_id = responseJson.trigger_id;
         let trigger_name = responseJson.trigger_name;
+        let trigger_icon = responseJson.trigger_icon;
         
-        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" value=${trigger_id} id=${trigger_name}><label for=${trigger_name}>${trigger_name}</label>`);
+        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" class="btn-check" value=${trigger_id} id=${trigger_name}><label class="btn btn-outline-primary" for=${trigger_name}><span class="material-symbols-outlined">
+        ${trigger_icon}
+        </span><br>${trigger_name}</label>`);
     }
     });
 });
+
+
 
 
 // adds period date if add date is selected on headache form
