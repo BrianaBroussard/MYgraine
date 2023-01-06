@@ -54,8 +54,8 @@ def get_triggers_for_headache(headache_id):
     
     trigger_lst = []
 
-    for headache_triggers in headache_triggers:
-        trigger_lst.append(Trigger.query.get(headache_triggers.trigger_id))
+    for headache_trigger in headache_triggers:
+        trigger_lst.append(Trigger.query.get(headache_trigger.trigger_id))
 
     return trigger_lst
 

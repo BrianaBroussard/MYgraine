@@ -5,42 +5,90 @@
   <h1>Create an Account</h1>
 
   <form action="/users" method="POST">
-    <p>
-      Email<span style="color: red">*</span>  <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
-    </p>
+   <!-- Create Account Accordian  -->
+  <div class="accordion" id="createAccount-accordian">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Basic Info
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>
+            Email<span style="color: red">*</span>  <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+          </p>
+      
+          <p>
+            Name<span style="color: red">*</span>  <input type="name" name="name"placeholder="Your Name" required>
+          </p>
+      
+          <p>
+              Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
+            </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Allow MYgraine Notifications
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>
+            Phone Number<span style="color: red">*</span>  <input type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
+          </p>
+          <p>
+            Allow notifications for MYgraine to remind you to log headaches:<span style="color: red">*</span> 
+            <input type="checkbox" name="notifications" value="True" id="notifications-true">
+            <label> yes</label> 
+            <input type="checkbox" name="notifications" value="False" id="notifications-false">
+            <label> no </label> 
+          </p>
+          <p id="schedule-notification">
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Additional Health Information
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <p>
+            Do you get periods? 
+            <input type="checkbox" name="period" value="True" id="periodtrue">
+            <label> yes</label> 
+            <input type="checkbox" name="period" value="False" id="periodfalse">
+            <label> no </label> 
+          </p>
+          <p>
+            What do you think are your common triggers?
+            {% for trigger in triggers %}   
 
-    <p>
-      Name<span style="color: red">*</span>  <input type="name" name="name"placeholder="Your Name" required>
-    </p>
+            <input type="checkbox" class="btn-check" name="default-triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
+            <label class="btn btn-outline-primary" for="{{trigger}}"><span class="material-symbols-outlined">
+              {{trigger.icon}}
+              </span><br>{{trigger.trigger_name}}</label>
+             {% endfor %}  
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p>
+    <input type="submit">
+  </p>
+</form>
 
-    <p>
-        Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
-      </p>
 
-      <p>
-        Phone Number<span style="color: red">*</span>  <input type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
-      </p>
-      <p>
-        Allow notifications for MYgraine to remind you to log headaches:<span style="color: red">*</span> 
-        <input type="checkbox" name="notifications" value="True" id="notifications-true">
-        <label> yes</label> 
-        <input type="checkbox" name="notifications" value="False" id="notifications-false">
-        <label> no </label> 
-      </p>
-      <p id="schedule-notification">
-      </p>
-      <p>
-        Do you get periods? 
-        <input type="checkbox" name="period" value="True" id="periodtrue">
-        <label> yes</label> 
-        <input type="checkbox" name="period" value="False" id="periodfalse">
-        <label> no </label> 
-      </p>
 
-    <p>
-      <input type="submit">
-    </p>
-  </form>
+  
 
   <script>
   // adds time schedule to create account form if user allows notifications

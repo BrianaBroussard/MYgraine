@@ -26,9 +26,12 @@ html, body {
   #calendar {
     max-width: 1100px;
     margin: 40px auto;
+    color: #012a4a;
   }
   
   
+
+
   .popper,
   .tooltip {
     position: absolute;

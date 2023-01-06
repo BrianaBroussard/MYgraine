@@ -174,7 +174,11 @@ def show_user_charts():
 @app.route("/sign-up")
 def show_sign_up_form():
     """take use to sign-up form"""
-    return render_template("create_account.html")
+
+    triggers = crud.show_all_default_triggers()
+
+    return render_template("create_account.html",
+                            triggers = triggers)
 
 
 @app.route("/users", methods=["POST"])
@@ -207,15 +211,18 @@ def register_user():
         user = crud.create_user(email, password, name, phone, scheduled_reminder, get_period)
         db.session.add(user)
         db.session.commit()
-        flash("Account created! Lets get some more info.")
-        session["user_email"] = user.email #may take this out if rearrange registration
+        flash("Account created! Log your first headache now!")
+        session["user_email"] = user.email 
+    
+    user_id = user.user_id  
 
-    triggers = crud.show_all_default_triggers()
-                
-    return render_template("create_triggers.html",
-                            user = user, 
-                            triggers = triggers,
-                            headache_type = headache_type)
+    triggers = request.form.getlist('default-triggers')     #returns list of checked trigger_ids
+
+    for trigger_id in triggers:
+        crud.add_trigger_for_user(user_id, trigger_id)
+    
+    return redirect("/user_dashboard")
+
 
 
 @app.route("/log-headache", methods=["POST"])
@@ -224,6 +231,7 @@ def log_headache():
     logged_in_email = session.get("user_email")
 
     user = crud.get_user_by_email(logged_in_email)
+            
     date_start = request.form.get('date-start')
     
     pain_scale = request.form.get('pain-scale')
@@ -281,29 +289,12 @@ def log_headache():
     
     flash(f"headache successfully logged")
 
+    if request.form.get('user-route') == "from-calendar":
+        return redirect("/user_calendar")
 
     return redirect("/user_dashboard")
 
    
-
-
-@app.route("/make-users-triggers",methods=["POST"])
-def make_users_default_triggers():
-    """Instantiate UserTrigger for user with the preset triggers"""
-
-    logged_in_email = session.get("user_email")
-    user = crud.get_user_by_email(logged_in_email)
-    user_id = user.user_id  
-
-    triggers = request.form.getlist('default-triggers')     #returns list of checked trigger_ids
-
-    for trigger_id in triggers:
-        crud.add_trigger_for_user(user_id, trigger_id)
-       
-    
-    return redirect("/user_dashboard")
-
-
 
 
 @app.route("/add-trigger.json", methods=["POST"])
@@ -400,6 +391,7 @@ def delete_headache(headache_id):
 
     return redirect("/user_dashboard")
 
+
 @app.route('/search-triggers.json', methods=['POST'])
 def search():
     """Searches for triggers in autocomplete"""
@@ -425,7 +417,6 @@ def search():
 
      
 
-   
 
 
 if __name__ == "__main__":

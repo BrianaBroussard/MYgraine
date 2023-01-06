@@ -3,10 +3,38 @@
 
 {% block head %} 
 <!-- FullCalendar -->
-<link rel="stylesheet"href="/static/css/calendar.css">
+
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/main.min.css' rel='stylesheet' />
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js"></script>
-<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
-<script src="https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js"></script>
+
+
+
+    <!--jQuery-->
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
+<script>  
+  $(function() {  
+     $( "#add-trigger" ).autocomplete({  
+      source: function(request, response) {
+              $.ajax({
+                type: "POST",
+                url: "/search-triggers.json",
+                dataType: "json",
+                data: {
+                    q: request.term
+              },
+                success : function(data) {
+                  response(data);
+              },
+
+            }
+            );
+          }, 
+          minLength: 1
+      });
+      }); 
+</script> 
 
 {% endblock %}
 
@@ -14,11 +42,9 @@
   <h1>{{user.name}} Profile </h1>
 
 
-
 <div class="container">
     <div class="row">
-        <div class="col-6"> 
-
+        
         <div class="col-6">
         <h2>Headache Calendar</h2>
              <div id='calendar'></div>
@@ -36,13 +62,14 @@
       initialView: 'dayGridMonth', 
  
       
-      // this isnt working probably because of bootstrap
+      
     eventDidMount: function(info) {
-    let tooltip = new Tooltip(info.el, {
+    let tooltip = new bootstrap.Tooltip(info.el, {
         title: info.event.extendedProps.description,
         placement: 'top',
         trigger: 'hover',
-        container: 'body'
+        container: 'body',
+        
       });
     },
 
@@ -52,10 +79,11 @@
    {
      id: '{{ headache.headache_id }}',
      title: '{{headache.headache_type}} Headache',
-     description:'{{headache.headache_type}} Headache Pain:{{headache.pain_scale}}/10',
+     description:'Type: {{headache.headache_type}} {% if headache.pain_scale%} Headache Pain:{{headache.pain_scale}}/10{% endif %} {% if headache.headache_trigger%} Logged Triggers: {% for headache_trigger in headache.headache_trigger%} {{headache_trigger.trigger.trigger_name}}, {% endfor %} {% endif %}',
      start: '{{headache.date_start}}',
      end: '{{headache.date_end}}', 
-     url: '/headache/{{ headache.headache_id }}',   
+     url: '/headache/{{ headache.headache_id }}',  
+     color: '#9096f5', 
    },
    {% endfor %} 
    
@@ -76,8 +104,10 @@
       //   // set value of headache date to the date user clicks on
     let headacheModal = new bootstrap.Modal(document.getElementById('add_headache'))
       start = info.startStr;
-      console.log(start);
+      
       document.querySelector('#date-start').value = start;
+      document.querySelector('#user-route').value = "from-calendar";
+      
       headacheModal.show();
       }
 
