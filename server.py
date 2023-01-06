@@ -3,12 +3,13 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-from model import connect_to_db, db
+from model import connect_to_db, db, Trigger
 import crud
 from constants import headache_type
 from statistics import mode 
 from datetime import datetime
 import humanize
+
 
 from jinja2 import StrictUndefined
 
@@ -399,8 +400,30 @@ def delete_headache(headache_id):
 
     return redirect("/user_dashboard")
 
-
+@app.route('/search-triggers.json', methods=['POST'])
+def search():
+    """Searches for triggers in autocomplete"""
+    term = request.form['q']
     
+    print ('term: ', term)
+    
+    all_triggers = []
+    triggers = Trigger.query.all()
+    filtered_search = []
+  
+    for trigger in triggers:
+        all_triggers.append(trigger.trigger_name)
+    
+    for trigger in all_triggers:
+        if trigger.lower().startswith(term.lower()[0]) and term.lower() in trigger.lower():
+            filtered_search.append(trigger)
+
+   
+    resp = jsonify(filtered_search)
+    resp.status_code = 200
+    return resp
+
+     
 
    
 
