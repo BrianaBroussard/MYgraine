@@ -10,3 +10,5 @@ echo "python3 //Users/brianabroussard/src/MYgraine_Project/send_sms.py"
 
 
 #cron tab runs this program daily at midnight 
+
+#this isnt working?

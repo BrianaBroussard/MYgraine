@@ -1,42 +1,91 @@
 {% extends 'base.html' %}
+{% block head %} 
+
+{% endblock %}
+
 {% block title %}MYgraine Home{% endblock %}
 
 {% block body %}
   <h1>Create an Account</h1>
 
+<!-- Create Account Accordian if Google Authentication-->
+
+{% if google_email %}
   <form action="/users" method="POST">
    <!-- Create Account Accordian  -->
   <div class="accordion" id="createAccount-accordian">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           Basic Info
         </button>
       </h2>
-      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
         <div class="accordion-body">
           <p>
-            Email<span style="color: red">*</span>  <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+            Email<span style="color: red">*</span>  <input type="text" name="email" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value = "{{google_email}}" required>
           </p>
       
           <p>
-            Name<span style="color: red">*</span>  <input type="name" name="name"placeholder="Your Name" required>
+            Name<span style="color: red">*</span>  <input type="name" name="name" value = "{{google_name}}" required>
           </p>
       
           <p>
-              Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
+              Password<span style="color: red">*</span>  <input type="password" name="password" value = "{{google_password}}" required>
             </p>
+            <p>
+          </p>
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="accordion-button collapse show" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           Allow MYgraine Notifications
         </button>
       </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
         <div class="accordion-body">
+
+      {% else %}
+      <!-- if not using Google Auth-->
+      <form action="/users" method="POST">
+        <!-- Create Account Accordian  -->
+       <div class="accordion" id="createAccount-accordian">
+         <div class="accordion-item">
+           <h2 class="accordion-header" id="headingOne">
+             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+               Basic Info
+             </button>
+           </h2>
+           <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+             <div class="accordion-body">
+               <p>
+                 Email<span style="color: red">*</span>  <input type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+               </p>
+           
+               <p>
+                 Name<span style="color: red">*</span>  <input type="name" name="name"placeholder="Your Name" required>
+               </p>
+           
+               <p>
+                   Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
+                 </p>
+                 <p>
+                 <a href="/login-with-Google"><button>Login with Google</button></a>
+               </p>
+             </div>
+           </div>
+         </div>
+         <div class="accordion-item">
+           <h2 class="accordion-header" id="headingTwo">
+             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+               Allow MYgraine Notifications
+             </button>
+           </h2>
+
+      {% endif %}
+
           <p>
             Phone Number<span style="color: red">*</span>  <input type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
           </p>

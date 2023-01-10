@@ -19,7 +19,7 @@ with app.app_context():
    #Returns list of tuples with all user's name and phone number
      
     users_phone_scheduled_reminder = []
-    query = User.query.filter(User.phone_number == "+19498387000", User.user_id == 5).all() #test query change id for test user prn 
+    query = User.query.filter(User.phone_number == "+19498387000", User.user_id == 9).all() #test query change id for test user prn 
     # query = User.query.all()
     
     

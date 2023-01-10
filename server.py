@@ -2,7 +2,7 @@
 """Server for movie ratings app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect, jsonify)
+                   redirect, jsonify, abort)
 from model import connect_to_db, db, Trigger
 import crud
 from constants import headache_type
@@ -10,13 +10,26 @@ from statistics import mode
 from datetime import datetime
 import humanize
 
-
 from jinja2 import StrictUndefined
+#below is all for google oauth
+import os
+import pathlib
+import requests
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
+#
 
 app = Flask(__name__)
-
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  #this is to set our environment to https because OAuth 2.0 only supports https environments
+GOOGLE_CLIENT_ID = os.environ.get('google_client_id',None)
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")  #set the path to where the .json file you got Google console is
+SCOPES = ["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"]
+
 
 
 @app.route('/')
@@ -42,7 +55,7 @@ def process_login():
         else:
             # Log in user by storing the user's email in session
             session["user_email"] = user.email
-            flash(f"Welcome back, {user.email}!")
+            flash(f"Welcome back, {user.name}!")
 
             return redirect("/user_dashboard")
         
@@ -56,6 +69,105 @@ def process_logout():
 
     del session["user_email"]
     return redirect("/")    
+
+
+@app.route("/create-account-with-Google") 
+def create_account_google():
+    """ the page where the user can login to Google """ 
+    flow = Flow.from_client_secrets_file(  #Flow is OAuth 2.0 a class that stores all the information on how we want to authorize our users
+    client_secrets_file=client_secrets_file,
+    scopes= SCOPES,  #here we are specifing what do we get after the authorization
+    redirect_uri="http://localhost:5000/google-create-account"  #and the redirect URI is the point where the user will end up after the authorization
+)
+    authorization_url, state = flow.authorization_url()  #asking the flow class for the authorization (login) url
+    session["state"] = state
+    return redirect(authorization_url)
+
+
+@app.route("/google-create-account")  
+def callback_create_account():
+    """this is the page that will handle the callback process meaning process after the authorization"""
+    flow = Flow.from_client_secrets_file(  #Flow is OAuth 2.0 a class that stores all the information on how we want to authorize our users
+    client_secrets_file=client_secrets_file,
+    scopes= SCOPES,  #here we are specifing what do we get after the authorization
+    redirect_uri="http://localhost:5000/google-create-account"  #and the redirect URI is the point where the user will end up after the authorization
+)
+    flow.fetch_token(authorization_response=request.url)
+    
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+
+    
+    google_email = id_info.get("email")
+    google_name = id_info.get("name")
+    google_password = id_info.get("sub")
+    triggers = crud.show_all_default_triggers()
+    flash(f'OK {google_name}, lets get a litte more info before creating your account')
+
+    return render_template("/create_account.html", 
+                            triggers = triggers, 
+                            google_name = google_name, 
+                            google_email = google_email,
+                            google_password = google_password)  
+
+
+
+@app.route("/Login-with-Google")  
+def login_with_google():
+    """the page where the user can login to Google """
+    flow = Flow.from_client_secrets_file(  #Flow is OAuth 2.0 a class that stores all the information on how we want to authorize our users
+    client_secrets_file=client_secrets_file,
+    scopes= SCOPES,  #here we are specifing what do we get after the authorization
+    redirect_uri="http://localhost:5000/google-login"  #and the redirect URI is the point where the user will end up after the authorization
+)
+    authorization_url, state = flow.authorization_url()  #asking the flow class for the authorization (login) url
+    session["state"] = state
+    return redirect(authorization_url)
+
+
+@app.route("/google-login") 
+def callback_login():
+    """this is the page that will handle the callback process meaning process after the authorization"""
+    flow = Flow.from_client_secrets_file(  #Flow is OAuth 2.0 a class that stores all the information on how we want to authorize our users
+    client_secrets_file=client_secrets_file,
+    scopes= SCOPES,  #here we are specifing what do we get after the authorization
+    redirect_uri="http://localhost:5000/google-login"  #and the redirect URI is the point where the user will end up after the authorization
+)
+    flow.fetch_token(authorization_response=request.url)
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+    
+    
+    email = id_info.get("email")
+    password = id_info.get("sub")
+    user = crud.get_user_by_email(email)
+
+    if not user or user.password != password:
+        flash("The email or password you entered was incorrect.")
+        return render_template("login.html")
+    else:
+        # Log in user by storing the user's email in session
+        session["user_email"] = user.email
+        flash(f"Welcome back, {user.name}!")
+
+        return redirect("/user_dashboard")
 
 
 @app.route("/user_dashboard")
