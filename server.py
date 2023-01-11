@@ -2,14 +2,14 @@
 """Server for movie ratings app."""
 
 from flask import (Flask, render_template, request, flash, session,
-                   redirect, jsonify, abort)
+                   redirect, jsonify)
 from model import connect_to_db, db, Trigger
 import crud
 from constants import headache_type
 from statistics import mode 
 from datetime import datetime
 import humanize
-
+from passlib.hash import argon2
 from jinja2 import StrictUndefined
 #below is all for google oauth
 import os
@@ -48,10 +48,14 @@ def process_login():
     if request.method == 'POST':
         email = request.form.get("email")
         password = request.form.get("password")
-
         user = crud.get_user_by_email(email)
-        if not user or user.password != password:
-            flash("The email or password you entered was incorrect.")
+        hashed_pw = user.password
+        password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
+
+        if not user:
+            flash("The email you entered was incorrect.")
+        elif not password_match:
+            flash("The password you entered was incorrect.")
         else:
             # Log in user by storing the user's email in session
             session["user_email"] = user.email
@@ -158,9 +162,14 @@ def callback_login():
     email = id_info.get("email")
     password = id_info.get("sub")
     user = crud.get_user_by_email(email)
+    hashed_pw = user.password
+    password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
 
-    if not user or user.password != password:
-        flash("The email or password you entered was incorrect.")
+    if not user:
+        flash("The email you entered was incorrect.")
+        return render_template("login.html")
+    elif not password_match:
+        flash("The password you entered was incorrect.")
         return render_template("login.html")
     else:
         # Log in user by storing the user's email in session
@@ -288,9 +297,10 @@ def show_sign_up_form():
     """take use to sign-up form"""
 
     triggers = crud.show_all_default_triggers()
-
+    
     return render_template("create_account.html",
-                            triggers = triggers)
+                            triggers = triggers,
+                            google_email = None)
 
 
 @app.route("/users", methods=["POST"])
@@ -300,6 +310,7 @@ def register_user():
     email = request.form.get("email")
     name = request.form.get("name").capitalize()
     password = request.form.get("password")
+    hashed_pw= argon2.hash(password)
     phone = "+1" + request.form.get("phone_number")
     wants_notifications = request.form.get("notifications")
 
@@ -320,7 +331,7 @@ def register_user():
         return redirect("/")
 
     else:
-        user = crud.create_user(email, password, name, phone, scheduled_reminder, get_period)
+        user = crud.create_user(email, hashed_pw, name, phone, scheduled_reminder, get_period)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Log your first headache now!")

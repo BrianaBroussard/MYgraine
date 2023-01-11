@@ -19,8 +19,8 @@ with app.app_context():
    #Returns list of tuples with all user's name and phone number
      
     users_phone_scheduled_reminder = []
-    query = User.query.filter(User.phone_number == "+19498387000", User.user_id == 9).all() #test query change id for test user prn 
-    # query = User.query.all()
+    #query = User.query.filter(User.phone_number == "+19498387000", User.user_id == 9).all() #test query change id for test user prn 
+    query = User.query.all()
     
     
     for user in query:
@@ -36,7 +36,7 @@ with app.app_context():
         #running program at midnight with cronjob 
         #and did not allow users to schedule between 12:00am and 1:01 to get around this 
         
-        send_when = date.today().isoformat() + "T" + users[2].isoformat() + "-08:00" #formats time and adjusts for local timezone with -08:00 
+        send_when = date.today().isoformat() + "T" + users[2].isoformat() + "-08:00" #formats time and adjusts for local timezone CA
         
         
    
