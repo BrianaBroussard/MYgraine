@@ -2,9 +2,10 @@
 {% block title %}MYgraine - dashboard {% endblock %}
 
 {% block head %} 
-<!-- FullCalendar -->
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.0.2/index.global.min.js"></script>
+<!-- FullCalendar 
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/bootstrap5@6.0.2/index.global.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.min.js"></script>
+
 
 
 
@@ -57,11 +58,13 @@
 {% block after_body %}
 
   <!-- FullCalendar -->
+  
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth', 
+      themeSystem: 'bootstrap5',
  
       
       

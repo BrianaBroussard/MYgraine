@@ -11,6 +11,7 @@ from datetime import datetime
 import humanize
 from passlib.hash import argon2
 from jinja2 import StrictUndefined
+import re
 #below is all for google oauth
 import os
 import pathlib
@@ -19,7 +20,7 @@ from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
-#
+
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -111,7 +112,7 @@ def callback_create_account():
 
     
     google_email = id_info.get("email")
-    google_name = id_info.get("name")
+    google_name = id_info.get("given_name")
     google_password = id_info.get("sub")
     triggers = crud.show_all_default_triggers()
     flash(f'OK {google_name}, lets get a litte more info before creating your account')
@@ -311,7 +312,8 @@ def register_user():
     name = request.form.get("name").capitalize()
     password = request.form.get("password")
     hashed_pw= argon2.hash(password)
-    phone = "+1" + request.form.get("phone_number")
+    phone = request.form.get("phone_number")
+    formatted_phone = "+1" + re.sub(r'^(?:\(\+\d+\))|\D', '', phone)
     wants_notifications = request.form.get("notifications")
 
     if wants_notifications == "True":
@@ -331,7 +333,7 @@ def register_user():
         return redirect("/")
 
     else:
-        user = crud.create_user(email, hashed_pw, name, phone, scheduled_reminder, get_period)
+        user = crud.create_user(email, hashed_pw, name, formatted_phone, scheduled_reminder, get_period)
         db.session.add(user)
         db.session.commit()
         flash("Account created! Log your first headache now!")

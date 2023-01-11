@@ -6,7 +6,7 @@ source //Users/brianabroussard/src/MYgraine_Project/venv/bin/activate
 #sourcing twilio keys in secrets.sh
 source //Users/brianabroussard/src/MYgraine_Project/secrets.sh
 
-
-
 #run twilio program to notify users
 python //Users/brianabroussard/src/MYgraine_Project/send_sms.py
+
+#crontab will run this with command:source /Users/brianabroussard/src/MYgraine_Project/job.sh

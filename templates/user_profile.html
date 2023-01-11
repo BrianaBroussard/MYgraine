@@ -9,23 +9,15 @@
 
 
 <!-- FullCalendar -->
-
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.0/index.global.min.js"></script>
 <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
 
 
+<!--jQuery-->
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
 
-<!-- Bootstrap Carousel-->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-    <!--jQuery-->
-    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
 <script>  
   $(function() {  
      $( "#add-trigger" ).autocomplete({  
@@ -58,13 +50,13 @@
   <div class="row">
     <div class="col-7">   
 <!-- Headache Carousel-->
-<div id="carouselHeadacheSummary" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-      <li data-target="#carouselHeadacheSummary" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselHeadacheSummary" data-slide-to="1"></li>
-      <li data-target="#carouselHeadacheSummary" data-slide-to="2"></li>
-      <li data-target="#carouselHeadacheSummary" data-slide-to="3"></li>
-  </ol>
+<div id="carouselHeadacheSummary" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide-to="2"></button>
+      <button type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide-to="3"></button>
+  </div>
   <div class="carousel-inner">
     {% if user.headaches %}
       <div class="carousel-item active">
@@ -132,14 +124,14 @@
       </div>
     {% endif %}
   </div>
-  <a class="carousel-control-prev" href="#carouselHeadacheSummary" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselHeadacheSummary" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-  </a>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselHeadacheSummary" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
     </div>
      <div class="col-5">
@@ -212,7 +204,7 @@
     let calendarEl = document.getElementById('calendar');
     let calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth', 
- 
+      themeSystem: 'bootstrap5',
       
       // this isnt working probably because of bootstrap
     eventDidMount: function(info) {
