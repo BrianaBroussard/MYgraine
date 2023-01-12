@@ -11,9 +11,16 @@
 .carousel-item > div {
     height: 100%;
     display: flex;
+    --carousel-dark-caption-color: white;
+    --carousel-dark-control-color: white;
     flex-direction: column;
     justify-content: center;
   }
+.carousel caption {
+  --carousel-dark-indicator-active-bg:  white;
+  --carousel-dark-caption-color:        white;
+  --carousel-dark-control-icon-filter:  invert(1) grayscale(100);
+}
 
 /* calendar css */
 html, body {
@@ -35,13 +42,11 @@ html, body {
  
   
 
-
-  .popper,
+  
   .tooltip {
     position: absolute;
     z-index: 9999;
     background: #9096f5;
-    color: black;
     width: 150px;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);

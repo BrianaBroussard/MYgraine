@@ -13,7 +13,8 @@ colorToggle.addEventListener('click',()=>{
     else {
         document.documentElement.setAttribute('data-bs-theme', 'dark');
         preferredTheme = "dark";
-        localStorage.setItem("preferredTheme", preferredTheme);    
+        localStorage.setItem("preferredTheme", preferredTheme);
+           
     }
 });
 
@@ -23,6 +24,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('data-bs-theme', theme);
     if (theme === "dark") {
         colorToggle.setAttribute('checked', "");
+        
     } 
 });
 

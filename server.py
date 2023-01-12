@@ -540,7 +540,17 @@ def search():
     resp.status_code = 200
     return resp
 
-     
+
+@app.route("/api/quotes")
+def get_quotes():
+    """Return random inspo quote from API call."""
+
+    url = 'https://api.goprogram.ai/inspiration'
+    headers = {'content-type': 'application/json'}
+    res_obj = requests.get(url, headers=headers)
+    quotes = res_obj.json()
+
+    return jsonify(quotes)
 
 
 
