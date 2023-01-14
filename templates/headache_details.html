@@ -21,7 +21,15 @@
       
     <p> {{headache.headache_type}} - Date: {{headache.date_start}} - {{headache.date_end}} 
         Pain: {{headache.pain_scale}} / 10
-        Potential Triggers: {{triggers}}
+        {% if triggers %}
+        Potential Triggers:
+        {% for trigger in triggers%}
+         {{trigger}}
+         {% endfor %}
+         {% endif %}
+        {% for med in meds_lst%}
+        You took {{med[2]}} X {{med[0]}} at {{med[1]}}, and reported it was {{med[3]}} 
+        {% endfor %}
      {% if headache.additional_notes %}
       Notes: {{headache.additional_notes}} 
      {% endif %}

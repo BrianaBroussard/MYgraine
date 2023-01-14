@@ -3,7 +3,7 @@
 
 from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
-from model import connect_to_db, db, Trigger
+from model import connect_to_db, db, Trigger, UserTrigger
 import crud
 from constants import headache_type
 from statistics import mode 
@@ -246,6 +246,9 @@ def show_user_dashboard():
     else:
         top_triggers = None
     
+    default_meds = crud.show_all_default_meds()
+    
+
      
     return render_template("user_profile.html", 
                             user = user, 
@@ -258,8 +261,9 @@ def show_user_dashboard():
                             max_pain = max_pain,
                             most_common_type = most_common_type,
                             percent_on_period = percent_on_period,
-                            time_since_most_recent = time_since_most_recent
-                             )
+                            time_since_most_recent = time_since_most_recent,
+                            default_meds = default_meds,
+                            )
 
 
 @app.route("/user_calendar")
@@ -269,11 +273,13 @@ def show_user_calendar():
     logged_in_email = session.get("user_email")
     user = crud.get_user_by_email(logged_in_email)
     users_triggers = crud.get_users_triggers(user.user_id)
+    default_meds = crud.show_all_default_meds()
 
     return render_template("user_calendar.html", 
                             user = user,
                             users_triggers = users_triggers, 
-                            headache_type = headache_type
+                            headache_type = headache_type,
+                            default_meds = default_meds,
                             )
 
 @app.route("/user_charts")
@@ -284,12 +290,14 @@ def show_user_charts():
     user = crud.get_user_by_email(logged_in_email)
     users_triggers = crud.get_users_triggers(user.user_id)
     dict_users_triggers = crud.get_users_triggers_with_count(user.user_id)
+    default_meds = crud.show_all_default_meds()
 
     return render_template("user_charts.html", 
                             user = user,
                             users_triggers = users_triggers, 
                             headache_type = headache_type,
-                            dict_users_triggers = dict_users_triggers
+                            dict_users_triggers = dict_users_triggers,
+                            default_meds = default_meds,
                             )
 
 
@@ -358,6 +366,9 @@ def log_headache():
     user = crud.get_user_by_email(logged_in_email)
             
     date_start = request.form.get('date-start')
+    time_start = request.form.get('time-start')
+    if time_start:
+        date_start = date_start + " " + time_start
     
     pain_scale = request.form.get('pain-scale')
 
@@ -378,10 +389,6 @@ def log_headache():
         date_end = date_ended
     else:
         date_end = date_start
-
-    time_start = request.form.get('time-start')
-    if time_start:
-        date_start = date_start + " " + time_start
 
 
     headache = crud.create_headache(date_start,
@@ -411,7 +418,15 @@ def log_headache():
         crud.create_headache_trigger(headache_id, trigger_id)
        
     db.session.commit()       
-    
+
+    meds = request.form.getlist("meds")  #returns a list of checked medications med_ids
+    #print("************************************************************",meds)
+    for med_id in meds:
+        efficacy = request.form.get(f"efficacy-{med_id}")
+        dose = request.form.get(f"dose-{med_id}")
+        headache_med = crud.create_headache_med(headache_id, med_id, dose, efficacy)
+
+
     flash(f"headache successfully logged")
 
     if request.form.get('user-route') == "from-calendar":
@@ -496,13 +511,20 @@ def show_headache(headache_id):
     for trigger in triggers:
         trigger_names.append(trigger.trigger_name)
 
+    meds_lst = crud.get_meds_for_headache(headache_id)
+
+
+    default_meds = crud.show_all_default_meds()
     users_triggers = crud.get_users_triggers(user.user_id)
+
     return render_template("headache_details.html",
                              headache = headache, 
                              user=user, 
                              triggers = trigger_names,
                              headache_type = headache_type,
-                             users_triggers = users_triggers)
+                             users_triggers = users_triggers,
+                             meds_lst = meds_lst,
+                             default_meds = default_meds)
 
 
 @app.route("/delete-headache/<headache_id>")
@@ -510,6 +532,22 @@ def delete_headache(headache_id):
     """button to delete headache""" 
     
     headache = crud.get_headache_by_id(headache_id)
+    user_id = headache.user.user_id
+    
+    
+    headache_meds = headache.headache_meds
+    for headache_med in headache_meds:
+        db.session.delete(headache_med)
+
+    headache_triggers = headache.headache_trigger
+    for headache_trigger in headache_triggers:
+        trigger_id = headache_trigger.trigger_id
+        updated_trigger = UserTrigger.query.filter(UserTrigger.user_id == user_id, 
+                          UserTrigger.trigger_id ==trigger_id).first()
+
+        updated_trigger.trigger_count -= 1
+        db.session.delete(headache_trigger)
+
     db.session.delete(headache)
     db.session.commit()
     flash("Headache Deleted")

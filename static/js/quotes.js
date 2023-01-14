@@ -7,9 +7,9 @@ window.onload = (event) => {
     .then((quoteData) => {
         let quote= quoteData['quote'];
         let author = quoteData['author'];
-        //document.querySelector('#quote')
-                //.textContent = `'${quote}' - ${author}`;
-                console.log(quote, author)
+        document.querySelector('#quote')
+                .textContent = `'${quote}' - ${author}`;
+                //console.log(quote, author)
     })
     
   };

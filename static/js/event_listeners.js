@@ -35,6 +35,23 @@ add_trigger_button.addEventListener('click', (event) => {
     });
 });
 
+window.addEventListener('DOMContentLoaded', (event) => {
+  document.getElementById("date-start").valueAsDate = new Date();
+});
+
+
+//adds form for medication efficacy and dosage if marked taken
+const add_med_button = document.querySelectorAll('.meds');
+
+for (let i=0; i< add_med_button.length; i++) {
+  let med_name = add_med_button[i].getAttribute('id')
+  let med_id = add_med_button[i].getAttribute('value')
+  
+  add_med_button[i].addEventListener('click', (event) => {
+    document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0">Not Sure</option><option value="1">Not Helpful</option><option value="2">Somewhat Helpful</option><option value="3">Helpful</option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: <input type="text" name="dose-${med_id}" id="dose" placeholder= "example: 2 or 1.5"> </p>`)
+  });
+}
+//regex validation not working?
 
 
 

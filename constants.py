@@ -30,18 +30,15 @@ trigger_names = [('Stress', 'mood_bad'),
             ('Aged cheese', 'local_pizza'),
             ('Chocolate', 'window')]
 
-"""
-medications = ['Zomig',
-              'Relpax',
-              'Maxalt',
-              'Acetaminophen',
-              'Topiramate',
-              'Ibuprofen',
-              'Sumatriptan',
-              'Aimovig',
-              'Ubrelvy']
+
+medications = [('Zomig', '5mg', 'bi bi-capsule'),
+              ('Relpax', '20mg','bi bi-capsule'),
+              ('Maxalt','5mg', 'bi bi-capsule'),
+              ('Acetaminophen','500mg', 'bi bi-capsule'),
+              ('Topiramate','25mg', 'bi bi-capsule'),
+              ('Ibuprofen','200mg', 'bi bi-capsule'),
+              ('Sumatriptan','3mg', 'bi bi-prescription'),
+              ('Aimovig','70ml', 'bi bi-prescription'),
+              ('Ubrelvy','50mg', 'bi bi-capsule')]
 
 
-colors = ['#758bfd', '#17c3b2', '#ee964b', '#eddcd2', '#cddafd',
-                        '#f0efeb', '#dbe7e4', '#d6e2e9', '#fde2e4', '#dfe7fd']
-                        """

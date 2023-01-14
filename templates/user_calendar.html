@@ -13,28 +13,8 @@
     <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
-<script>  
-  $(function() {  
-     $( "#add-trigger" ).autocomplete({  
-      source: function(request, response) {
-              $.ajax({
-                type: "POST",
-                url: "/search-triggers.json",
-                dataType: "json",
-                data: {
-                    q: request.term
-              },
-                success : function(data) {
-                  response(data);
-              },
-
-            }
-            );
-          }, 
-          minLength: 1
-      });
-      }); 
-</script> 
+    <script src ="/static/js/triggerjquery.js"></script>
+ 
 
 {% endblock %}
 

@@ -1,7 +1,7 @@
 """Script to seed database."""
 
 import os
-from constants import trigger_names
+from constants import trigger_names, medications
 
 import crud
 import model
@@ -20,5 +20,9 @@ for trigger in trigger_names:
     model.db.session.add(const_trigger)
 model.db.session.commit()
 
-
+#create preset medications
+for med in medications:
+    const_med = crud.create_medications(med[0], med[1], med[2], is_default = True)
+    model.db.session.add(const_med)
+model.db.session.commit()
 

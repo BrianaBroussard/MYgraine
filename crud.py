@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Headache, Trigger, Period, UserTrigger, HeadacheTrigger, connect_to_db
+from model import db, User, Headache, Trigger, Period, UserTrigger, HeadacheTrigger, Medication, HeadacheMed, connect_to_db
 
 def create_user(email, password, name, phone_number,scheduled_reminder, get_period):
     """Create and return a new user."""
@@ -158,8 +158,84 @@ def most_common_triggers(freq_dict, n):
     return { k: v for k, v in freq_dict.items() if v >= nth_most_common }
     
 
+def create_medications(med_name, dose, icon, is_default = False):
+    """creates new medications entered by users"""
 
+    medication = Medication(med_name = med_name,
+                            dose = dose,
+                            icon = icon,
+                            is_default = is_default)
+
+    return medication
+
+def create_headache_med(headache_id, med_id, dose, efficacy):
+    """creates relationship between user's logged headache and meds used"""
+
+    headache_med = HeadacheMed(headache_id = headache_id,
+                               med_id = med_id,
+                               dose = dose,
+                               efficacy = efficacy)
+    
+    db.session.add(headache_med)
+    db.session.commit()
+
+
+def show_all_default_meds():
+    """queries and displays all seeded meds"""
+
+    default_meds = Medication.query.filter(Medication.is_default == True).all()
+
+    return default_meds
    
+"""
+currently no usecase for this function might delete
+def get_actual_dose(str):
+    #converts string dose into int with string units
+        #ex '200mg' => 200, 'mg' 
+                             
+    nums = "0123456789"
+    number_lst = []
+    units_lst = []
+
+    for s in str:
+        if s in nums:
+            number_lst.append(s)
+        else:
+            units_lst.append(s)
+    int_dose = int("".join(number_lst))
+    units = "".join(units_lst)
+
+    """
+   
+
+
+
+def get_meds_for_headache(headache_id):
+    """get medication information for user's logged headache"""
+    headache = get_headache_by_id(headache_id)
+    headache_meds = headache.headache_meds
+    
+    meds_lst = []
+    #want medication name/dose, how much user took, efficacy
+
+    for headache_med in headache_meds:
+        medication = (Medication.query.get(headache_med.med_id))
+        med_name = medication.med_name
+        med_dose = medication.dose #string
+        taken_amount = int(headache_med.dose)
+        efficacy_number = headache_med.efficacy
+        if efficacy_number == 0:
+            efficacy = "unclear if it was effective"
+        elif efficacy_number == 1:
+            efficacy = "not helpful"
+        elif efficacy_number == 2:
+            efficacy = "somewhat helpful"
+        elif efficacy_number == 3:
+            efficacy = "helpful"
+
+        meds_lst.append((med_name, med_dose, taken_amount, efficacy))
+
+    return meds_lst   
 
 
 if __name__ == '__main__':

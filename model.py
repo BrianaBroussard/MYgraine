@@ -31,7 +31,7 @@ class Headache(db.Model):
     __tablename__ = "headaches"
 
     headache_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable = False)
     date_start = db.Column(db.DateTime)
     date_end = db.Column(db.DateTime)
     pain_scale = db.Column(db.Integer)
@@ -43,14 +43,16 @@ class Headache(db.Model):
 
     user = db.relationship("User", back_populates="headaches")
     headache_trigger = db.relationship("HeadacheTrigger", back_populates="headache")
+    headache_meds = db.relationship("HeadacheMed", back_populates="headache")
 
-    #medications = db.relationship("Medication", back_populates="headaches")
+    
 
     def __repr__(self):
         return f"<Headache headache_id={self.headache_id} type={self.headache_type}>"
 
 
 class HeadacheTrigger(db.Model):
+    """middle table between headaches and associated triggers"""
 
     __tablename__ = 'headaches_triggers'
 
@@ -65,6 +67,7 @@ class HeadacheTrigger(db.Model):
         return f"<Headache's triggers headache_id={self.headache_id} trigger_id={self.trigger_id}>"
 
 class UserTrigger(db.Model):
+    """middle tale between users and their associated triggers"""
 
     __tablename__ = 'users_triggers'
 
@@ -111,20 +114,39 @@ class Period(db.Model):
         return f"<Period period_id={self.period_id} start_date={self.date_start}>"
 
 
-#class Medication(db.Model):
+class HeadacheMed(db.Model):
+    """Middle Table between Headaches and the Medications taken for it"""
+
+    __tablename__ = "headache_med"
+
+    headache_med = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"), nullable = False)
+    med_id = db.Column(db.Integer,db.ForeignKey("medications.med_id"), nullable = False) 
+    dose = db.Column(db.String)
+    efficacy = db.Column(db.Integer) #0-3 range
+
+    headache = db.relationship("Headache", back_populates="headache_meds")
+    medication = db.relationship("Medication", back_populates="headache_med")
+
+    def __repr__(self):
+        return f"<Headache_med medication_id={self.med_id} headache_id={self.headache_id}>"
+
+
+class Medication(db.Model):
     """A medication""" 
 
-#    __tablename__ = "medications"
+    __tablename__ = "medications"
 
-#    medication_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-#    headache_id = db.Column(db.Integer, db.ForeignKey("headaches.headache_id"))
-#    med_name = db.Column(db.String)
-#    efficacy = db.Column(db.String)
+    med_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    med_name = db.Column(db.String)
+    is_default = db.Column(db.Boolean, default = False)
+    dose = db.Column(db.String)
+    icon = db.Column(db.String)
     
-#    headaches = db.relationship("Headache", back_populates="medications")
+    headache_med = db.relationship("HeadacheMed", back_populates="medication")
 
-#    def __repr__(self):
-#        return f"<Medication medication_id={self.medication_id} med_name={self.med_name}>"
+    def __repr__(self):
+        return f"<Medication medication_id={self.med_id} med_name={self.med_name}>"
 
 
 

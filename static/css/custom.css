@@ -1,11 +1,33 @@
+
+body{
+  font-family: 'Montserrat', sans-serif;
+  font-size: large;
+  background-image: url('https://www.niaid.nih.gov/themes/custom/niaid-drupal-theme/patternlab/src/images/waves.svg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.header {
+  /*background-image: url('/static/img/headerbanner.png');
+  background-color: #cccccc; /* Used if the image is unavailable */
+  /*height: 150px; /* You must set a specified height */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; 
+}
+
+
 /* trigger buttons css */
 .btn-outline-primary {
     width: 100px;
     height: 100px;
     white-space:normal !important;
-    word-wrap: break-word; 
-     
+    word-wrap: break-word;  
+    
 }
+
+
 
 /* carousel css */
 .carousel-item > div {
@@ -39,14 +61,12 @@ html, body {
   }
   
 
- 
-  
-
   
   .tooltip {
     position: absolute;
     z-index: 9999;
     background: #9096f5;
+    --color:#9096f5; 
     width: 150px;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
