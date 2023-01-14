@@ -50,19 +50,21 @@ def process_login():
         email = request.form.get("email")
         password = request.form.get("password")
         user = crud.get_user_by_email(email)
-        hashed_pw = user.password
-        password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
+        #hashed_pw = user.password
+        #password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
 
         if not user:
             flash("The email you entered was incorrect.")
-        elif not password_match:
+            return render_template("login.html")
+        elif not argon2.verify(password, user.password):   #returns True if entered password is correct 
             flash("The password you entered was incorrect.")
+            return render_template("login.html")
         else:
             # Log in user by storing the user's email in session
             session["user_email"] = user.email
             flash(f"Welcome back, {user.name}!")
 
-            return redirect("/user_dashboard")
+        return redirect("/user_dashboard")
         
 
     return render_template("login.html")
@@ -163,13 +165,13 @@ def callback_login():
     email = id_info.get("email")
     password = id_info.get("sub")
     user = crud.get_user_by_email(email)
-    hashed_pw = user.password
-    password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
+    #hashed_pw = user.password
+    #password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
 
     if not user:
         flash("The email you entered was incorrect.")
         return render_template("login.html")
-    elif not password_match:
+    elif not argon2.verify(password, user.password):   #returns True if entered password is correct 
         flash("The password you entered was incorrect.")
         return render_template("login.html")
     else:
@@ -247,7 +249,7 @@ def show_user_dashboard():
         top_triggers = None
     
     default_meds = crud.show_all_default_meds()
-    
+
 
      
     return render_template("user_profile.html", 
