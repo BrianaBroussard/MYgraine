@@ -50,8 +50,7 @@ def process_login():
         email = request.form.get("email")
         password = request.form.get("password")
         user = crud.get_user_by_email(email)
-        #hashed_pw = user.password
-        #password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
+
 
         if not user:
             flash("The email you entered was incorrect.")
@@ -64,7 +63,7 @@ def process_login():
             session["user_email"] = user.email
             flash(f"Welcome back, {user.name}!")
 
-        return redirect("/user_dashboard")
+            return redirect("/user_dashboard")
         
 
     return render_template("login.html")
@@ -165,8 +164,7 @@ def callback_login():
     email = id_info.get("email")
     password = id_info.get("sub")
     user = crud.get_user_by_email(email)
-    #hashed_pw = user.password
-    #password_match = argon2.verify(password, hashed_pw) #returns True if entered password is correct 
+
 
     if not user:
         flash("The email you entered was incorrect.")
