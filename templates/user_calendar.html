@@ -10,23 +10,18 @@
 
 
     <!--jQuery-->
-    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
-    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
-    <script src ="/static/js/triggerjquery.js"></script>
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">  
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
+<script src ="/static/js/triggerjquery.js"></script>
  
 
 {% endblock %}
 
 {% block body %}
-  <h1>{{user.name}} Profile </h1>
 
-
-<div class="container">
-    <div class="row">
         
         <div class="col-6">
-        <h2>Headache Calendar</h2>
              <div id='calendar'></div>
         </div>
     </div>
@@ -45,7 +40,8 @@
     let calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth', 
       themeSystem: 'bootstrap5',
- 
+      
+      
       
       
     eventDidMount: function(info) {
@@ -63,12 +59,12 @@
    {% for headache in user.headaches %} 
    {
      id: '{{ headache.headache_id }}',
-     title: '{{headache.headache_type}} Headache',
+     title: '{{headache.headache_type}}',
      description:'Type: {{headache.headache_type}} {% if headache.pain_scale%} Headache Pain:{{headache.pain_scale}}/10{% endif %} {% if headache.headache_trigger%} Logged Triggers: {% for headache_trigger in headache.headache_trigger%} {{headache_trigger.trigger.trigger_name}}, {% endfor %} {% endif %}',
      start: '{{headache.date_start}}',
      end: '{{headache.date_end}}', 
      url: '/headache/{{ headache.headache_id }}',  
-     color: '#9096f5', 
+     color: '#9096F5', 
    },
    {% endfor %} 
    

@@ -222,7 +222,7 @@ def get_meds_for_headache(headache_id):
         medication = (Medication.query.get(headache_med.med_id))
         med_name = medication.med_name
         med_dose = medication.dose #string
-        taken_amount = int(headache_med.dose)
+        taken_amount = float(headache_med.dose)
         efficacy_number = headache_med.efficacy
         if efficacy_number == 0:
             efficacy = "unclear if it was effective"

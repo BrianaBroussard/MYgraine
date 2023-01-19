@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
-{% block head %} 
+{% block head %}
 
 {% endblock %}
 
 {% block title %}MYgraine Home{% endblock %}
 
 {% block body %}
-  <h1>Create an Account</h1>
+<h1>Create an Account</h1>
+<main class="container col-xxl-10 px-4 ">
+
+  <section class="row align-items-center">
+    <div class="col-lg-6 pe-40">
 
 <!-- Create Account Accordian if Google Authentication-->
 
@@ -55,7 +59,7 @@
          <div class="accordion-item">
            <h2 class="accordion-header" id="headingOne">
              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-               Basic Info
+               1) Basic Info
              </button>
            </h2>
            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
@@ -72,7 +76,7 @@
                    Password<span style="color: red">*</span>  <input type="password" name="password" placeholder="Password" required>
                  </p>
                  <p>
-                 <a href="/create-account-with-Google"><button>Sign Up with Google</button></a>
+                 <a href="/create-account-with-Google"><button type="button" class="login-with-google-btn">Sign Up with Google</button></a>
                </p>
              </div>
            </div>
@@ -80,7 +84,7 @@
          <div class="accordion-item">
           <h2 class="accordion-header" id="headingTwo">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="falso" aria-controls="collapseTwo">
-              Allow MYgraine Notifications
+             2) Allow MYgraine Notifications
             </button>
           </h2>
           <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -106,7 +110,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Additional Health Information
+         3) Additional Health Information
         </button>
       </h2>
       <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -120,34 +124,39 @@
           </p>
           <p>
             What do you think are your common triggers?
+            <p class="justify-content-md-start">
             {% for trigger in triggers %}   
-
+            
             <input type="checkbox" class="btn-check" name="default-triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
             <label class="btn btn-outline-primary" for="{{trigger}}"><span class="material-symbols-outlined">
               {{trigger.icon}}
               </span><br>{{trigger.trigger_name}}</label>
              {% endfor %}  
+            </p>
           </p>
         </div>
       </div>
     </div>
   </div>
   <p>
-    <input type="submit">
+    <input class="btn btn-primary mt-2" type="submit">
   </p>
 </form>
+        </div>
+        <figure class="col-lg-6">
+          <img class="img-fluid" src="/static/img/NurtureBrain.png" alt="hero-image">
+        </figure>
+      </section>
+</main>
 
 
-
-  
-
-  <script>
+<script>
   // adds time schedule to create account form if user allows notifications
-    const schedule_notifications = document.querySelector('#notifications-true');
-    
-    function addScheduler() {
-      document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/>' );
-    }
-    schedule_notifications.addEventListener('click', addScheduler);</script>
- 
+  const schedule_notifications = document.querySelector('#notifications-true');
+
+  function addScheduler() {
+    document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/>');
+  }
+  schedule_notifications.addEventListener('click', addScheduler);</script>
+
 {% endblock %}

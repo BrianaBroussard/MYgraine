@@ -15,27 +15,17 @@
 {% endblock %}
 
 {% block body %}
-  <h1>{{user.name}} Profile </h1>
-
-
-<div class="container">
-  <div class="row">
-    <div class="col-4"> 
-    <h2>Your Possible Triggers</h2>
-        <div>
-    {% for triggername, triggercount in dict_users_triggers.items() %}  
-     
-    <p> 
-        {{triggername}} - {{triggercount}}
-    </p>
-   
-    {% endfor %}  
-        </div>
-    </div>
-  </div>
-
 
   <div class="col-6"> 
+    <h2>Your Possible Triggers</h2>
+    <div>
+{% for triggername, triggercount in dict_users_triggers.items() %}  
+ 
+<p> 
+    {{triggername}} - logged {{triggercount}} 
+</p>
+
+{% endfor %}  
 
   <h2> Trigger Chart</h2>
 

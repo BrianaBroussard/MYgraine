@@ -423,7 +423,11 @@ def log_headache():
     #print("************************************************************",meds)
     for med_id in meds:
         efficacy = request.form.get(f"efficacy-{med_id}")
-        dose = request.form.get(f"dose-{med_id}")
+        dosage = request.form.get(f"dose-{med_id}")
+        if dosage:
+            dose = dosage
+        else:
+            dose = 1
         headache_med = crud.create_headache_med(headache_id, med_id, dose, efficacy)
 
 

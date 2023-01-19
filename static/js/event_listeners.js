@@ -49,8 +49,8 @@ for (let i=0; i< add_med_button.length; i++) {
   
   add_med_button[i].addEventListener('click', (event) => {
     document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0">Not Sure</option><option value="1">Not Helpful</option><option value="2">Somewhat Helpful</option><option value="3">Helpful</option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: <input type="text" name="dose-${med_id}" id="dose" placeholder= "example: 2 or 1.5"> </p>`)
-  });
-}
+  }, { once: true });
+};
 //regex validation not working?
 
 

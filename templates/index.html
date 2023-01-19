@@ -1,17 +1,36 @@
 {% extends 'base.html' %}
 {% block title %}MYgraine Home{% endblock %}
 
+
 {% block body %}
-  <h1>Welcome!</h1>
-  <a href="/create-account-with-Google"><button>Sign Up with Google</button></a>
 
-  <h2>Create an Account</h2>
-  <form action="/sign-up" >
-    <button type="submit">Sign Up</button>
-  </form>
+    <main class="container col-xxl-10 px-4 ">
 
-  <h2>Log In</h2>
-  <a href="/login"><button>Log In</button></a>
+      <section class="row align-items-center">
+        <div class="col-lg-5">
+          <div class=" mb-3">
+            <div editable="rich">
+              <h1 class="fw-bold display-5">Take Back Your Health.</h1>
+            </div>
+          </div>
 
-  
-{% endblock %}
+          <div >
+            <div editable="rich">
+              <p class="lead">Headache Tracking Made Easy.
+              </p>
+            </div>
+          </div>
+
+          <div class=" d-grid gap-2 d-md-flex justify-content-md-start"><a class="btn btn-primary px-4"
+              href="/sign-up" role="button">Get Started</a>
+          </div>
+
+        </div>
+        <figure class="col-lg-7">
+          <img class="img-fluid" src="/static/img/NurtureBrain.png" alt="hero-image">
+        </figure>
+
+      </section>
+    </main>
+
+    {% endblock %}
