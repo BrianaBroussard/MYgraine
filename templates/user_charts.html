@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}MYgraine - dashboard {% endblock %}
+{% block title %}MYgraine - Triggers {% endblock %}
 
 {% block head %} 
 <!-- Chart.js -->
@@ -16,7 +16,7 @@
 
 {% block body %}
 
-  <div class="col-6"> 
+  <div class="col-xxl-6 col-md-4"> 
     <h2>Your Possible Triggers</h2>
     <div>
 {% for triggername, triggercount in dict_users_triggers.items() %}  

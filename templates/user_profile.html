@@ -14,7 +14,7 @@
 
 {% block body %}
 
-    <div class="col-6 text-center">
+    <div class="col-xxl-6 col-lg-4  text-center">
       <!-- Headache Carousel-->
       <div id="carouselHeadacheSummary" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -28,7 +28,7 @@
         </div>
         <div class="carousel-inner">
           {% if user.headaches %}
-          <div class="carousel-item active" data-bs-interval="15000">
+          <div class="carousel-item active" data-bs-interval="12000">
             <img class="d-block w-100" src="/static/img/Carousel1.png" alt="First slide">
             <div class="carousel-caption">
               <h3>{{user.name}}'s Headaches</h3>
@@ -36,7 +36,7 @@
               <h5>Your most recent headache was {{time_since_most_recent}} ago</h5>
             </div>
           </div>
-          <div class="carousel-item" data-bs-interval="15000">
+          <div class="carousel-item" data-bs-interval="12000">
             <img class="d-block w-100" src="/static/img/Carousel2.png" alt="Second slide">
             <div class="carousel-caption">
               <h3>{{user.name}}'s Headaches</h3>
@@ -48,7 +48,7 @@
             </div>
           </div>
           {% else %}
-          <div class="carousel-item active" data-bs-interval="15000">
+          <div class="carousel-item active" data-bs-interval="12000">
             <img class="d-block w-100" src="/static/img/Carousel1.png" alt="First slide">
             <div class="carousel-caption">
               <h3>{{user.name}}'s Headaches</h3>
@@ -59,7 +59,7 @@
           {% endif %}
 
 
-          <div class="carousel-item" data-bs-interval="15000">
+          <div class="carousel-item" data-bs-interval="12000">
             <img class="d-block w-100" src="/static/img/Carousel3.png" alt="Third slide">
             <div class="carousel-caption">
               {% if top_triggers != None %}
@@ -79,7 +79,7 @@
 
 
           {% if user.period %}
-          <div class="carousel-item" data-bs-interval="15000">
+          <div class="carousel-item" data-bs-interval="12000">
             <img class="d-block w-100" src="/static/img/Carousel1.png" alt="Fourth slide">
             <div class="carousel-caption">
               <h5>{{user.name}}'s Periods</h5>
