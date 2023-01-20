@@ -97,10 +97,19 @@
           </p>
           <p>
             Allow notifications for MYgraine to remind you to log headaches:<span style="color: red">*</span> 
-            <input type="checkbox" name="notifications" value="True" id="notifications-true">
-            <label> yes</label> 
-            <input type="checkbox" name="notifications" value="False" id="notifications-false">
-            <label> no </label> 
+            
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="notifications" id="notifications-true" value= "True" >
+        <label class="form-check-label" for="notifications on">
+          Yes
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="notifications" id="notifications-false" value="False"  >
+        <label class="form-check-label" for="notifications off">
+          No
+        </label>
+      </div>
           </p>
           <p id="schedule-notification">
           </p>
@@ -151,12 +160,13 @@
 
 
 <script>
-  // adds time schedule to create account form if user allows notifications
-  const schedule_notifications = document.querySelector('#notifications-true');
+    // adds time schedule to create account form if user allows notifications
+    const schedule_notifications = document.querySelector('#notifications-true');
 
-  function addScheduler() {
-    document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/>');
-  }
-  schedule_notifications.addEventListener('click', addScheduler);</script>
+function addScheduler() {
+  document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/>');
+}
+schedule_notifications.addEventListener('click', addScheduler);
+</script>
 
 {% endblock %}

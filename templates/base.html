@@ -141,7 +141,7 @@
                       <h2>Log Any Potential Triggers</h2>
 
                       <p> <label for="trigger-name">Select potential triggers:</label> </p>
-                      <p>
+                      <p id="new-trigger">
                         {% if user.user_triggers %}
                         {% for trigger in users_triggers %}
                         <input type="checkbox" class="btn-check" name="triggers" value="{{trigger.trigger_id}}"
@@ -152,18 +152,20 @@
                           </span><br>{{trigger.trigger_name}}</label>
                         {% endfor %}
                         {% endif %}
-                      <div id="new-trigger"></div>
+                      </p>
+                      
                       <div class="ui-widget ui-front">
                         <input for="add-trigger" type="text" name="add-trigger" id="add-trigger">
                         <button id="add-trigger-button">Add Trigger</button>
                       </div>
-                      </p>
-                      <h2>Did you take any medication?</h2>
+                      
+                      
                       <p>
+                        <h2>Did you take any medication?</h2>
                         {% for med in default_meds %}
                         <input type="checkbox" class="btn-check meds" name="meds" value="{{med.med_id}}"
                           id="{{med.med_name}}" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="{{med.med_name}}"><i class="{{med.icon}}"></i>
+                        <label class="btn btn-outline-primary m-1" for="{{med.med_name}}"><i class="{{med.icon}}"></i>
                           <br>{{med.med_name}} {{med.dose}}</label>
                         {% endfor %}
                       </p>
@@ -188,11 +190,11 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-person-circle"></i>
-              {{ user.name }}'s profile
+              {{ user.name}}'s profile
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/user_dashboard">View Profile</a></li>
-              <li><a class="dropdown-item" href="#">Edit My Account</a></li>
+              <li><a class="dropdown-item" href="/edit-account">Edit My Account</a></li>
               <li><a class="dropdown-item" href="/logout">Log Out</a></li>
 
             </ul>
@@ -226,6 +228,9 @@
             <div class="sidebar-item">
               <div class="sidebar-content" style="text-align: center;">
                 <div style="display: inline-block; text-align: left;">
+                  <a class="nav-link" href="/">
+                    <i class="bi bi-person-circle"></i> {{user.name}}'s Profile
+                  </a>
                   <!-- Button triggers the Headache modal -->
                   <a class="nav-link" href="#add_headache" data-bs-toggle="modal" data-bs-target="#add_headache"><i
                       class="bi bi-plus-square"></i> Add Headache</a>

@@ -14,7 +14,7 @@
 
 {% block body %}
 
-    <div class="col-xxl-6 col-lg-4  text-center">
+    <div class="col-xxl-6 col-lg-5 order-lg-2  text-center">
       <!-- Headache Carousel-->
       <div id="carouselHeadacheSummary" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -33,7 +33,11 @@
             <div class="carousel-caption">
               <h3>{{user.name}}'s Headaches</h3>
               <h5>You have had {{number_of_headaches}} logged headaches</h5>
+              {% if time_since_most_recent == "1 minutes" %}
+              <h5>Your most recent headache was 1 minute ago</h5>
+              {% else %}
               <h5>Your most recent headache was {{time_since_most_recent}} ago</h5>
+              {% endif %}
             </div>
           </div>
           <div class="carousel-item" data-bs-interval="12000">

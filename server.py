@@ -603,6 +603,48 @@ def get_quotes():
 
 
 
+@app.route("/edit-account", methods=["GET", "POST"])
+def edit_account():
+    """Shows Edit Account Page and Allows Users to Edit Notifications"""
+
+    logged_in_email = session.get("user_email")
+    user = crud.get_user_by_email(logged_in_email)
+    phonevalue = user.phone_number[2:]
+    
+    if request.method == 'POST':
+        phone = request.form.get("phone_number")
+        formatted_phone = "+1" + re.sub(r'^(?:\(\+\d+\))|\D', '', phone)
+        user.phone_number = formatted_phone
+        wants_notifications = request.form.get("notifications")
+
+        if wants_notifications == "True":
+            scheduled_reminder = request.form.get("scheduled-reminder")
+            user.scheduled_reminder = scheduled_reminder
+        else:
+            if user.scheduled_reminder:
+                user.scheduled_reminder = None
+            
+
+        db.session.commit()
+        flash("Account Updated")
+        return redirect("/edit-account")
+
+    default_meds = crud.show_all_default_meds()
+    users_triggers = crud.get_users_triggers(user.user_id)
+            
+        
+
+    return render_template("edit_account.html",                            
+                            user = user,
+                            users_triggers = users_triggers, 
+                            headache_type = headache_type,
+                            default_meds = default_meds,
+                            phonevalue = phonevalue
+                            )
+
+
+
+
 if __name__ == "__main__":
     connect_to_db(app)
     app.run(host="0.0.0.0", debug=True)

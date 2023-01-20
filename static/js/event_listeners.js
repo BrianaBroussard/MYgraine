@@ -28,7 +28,7 @@ add_trigger_button.addEventListener('click', (event) => {
         let trigger_name = responseJson.trigger_name;
         let trigger_icon = responseJson.trigger_icon;
         
-        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" class="btn-check" value=${trigger_id} id=${trigger_name}><label class="btn btn-outline-primary mb-1 ms-1 mr-1" for=${trigger_name}><span class="material-symbols-outlined">
+        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" class="btn-check" value=${trigger_id} id=${trigger_name}><label class="btn btn-outline-primary m-1" for=${trigger_name}><span class="material-symbols-outlined">
         ${trigger_icon}
         </span><br>${trigger_name}</label>`);
     }
@@ -36,7 +36,7 @@ add_trigger_button.addEventListener('click', (event) => {
 });
 
 
-
+//adds today's date as default value for add headache form
 window.addEventListener('DOMContentLoaded', (event) => {
   
   document.getElementById("date-start").valueAsDate = new Date();
@@ -57,6 +57,15 @@ for (let i=0; i< add_med_button.length; i++) {
 };
 //regex validation not working?
 
+
+    // clears scheduler if no reminder is selected 
+const notifications_false = document.querySelector('#notifications-false');
+
+function clearScheduler() {
+  document.getElementById("schedule-reminder").value = "";
+  
+}
+notifications_false.addEventListener('click', clearScheduler);
 
 
 // adds period date if add date is selected on headache form
