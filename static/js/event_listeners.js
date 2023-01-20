@@ -23,20 +23,24 @@ add_trigger_button.addEventListener('click', (event) => {
         if (responseJson.status === "Error") {
             alert("Sorry that trigger is already listed");
         } else {
-        alert(responseJson.status);    
+           
         let trigger_id = responseJson.trigger_id;
         let trigger_name = responseJson.trigger_name;
         let trigger_icon = responseJson.trigger_icon;
         
-        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" class="btn-check" value=${trigger_id} id=${trigger_name}><label class="btn btn-outline-primary" for=${trigger_name}><span class="material-symbols-outlined">
+        document.querySelector('#new-trigger').insertAdjacentHTML('beforeend', `<input type="checkbox" name="triggers" class="btn-check" value=${trigger_id} id=${trigger_name}><label class="btn btn-outline-primary mb-1 ms-1 mr-1" for=${trigger_name}><span class="material-symbols-outlined">
         ${trigger_icon}
         </span><br>${trigger_name}</label>`);
     }
     });
 });
 
+
+
 window.addEventListener('DOMContentLoaded', (event) => {
+  
   document.getElementById("date-start").valueAsDate = new Date();
+  
 });
 
 

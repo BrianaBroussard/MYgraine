@@ -52,8 +52,8 @@
             <img class="d-block w-100" src="/static/img/Carousel1.png" alt="First slide">
             <div class="carousel-caption">
               <h3>{{user.name}}'s Headaches</h3>
-              <h4>You have dont have any logged headaches</h4>
-              <h4>Log your first headache now!</h4>
+              <h4>You Dont Have Any Logged Headaches</h4>
+              <h4>Log your first headache Now!</h4>
             </div>
           </div>
           {% endif %}
@@ -66,10 +66,18 @@
               <h4>{{user.name}}'s Most Logged Triggers</h5>
 
                 {% for triggername, triggercount in top_triggers.items() %}
+
+                {% if triggercount == 1%}
                 <h5>
-                  {{triggername}} - you logged {{triggercount}} times
+                    {{triggername}} logged 1 time
                 </h5>
+                {% else %}
+                <h5>
+                   {{triggername}} logged {{triggercount}} times
+                </h5>
+                {% endif %}
                 {% endfor %}
+                
 
                 {% else %}
                 <h5>{{user.name}}'s You Haven't Logged Any Triggers Yet</h5>
@@ -80,7 +88,7 @@
 
           {% if user.period %}
           <div class="carousel-item" data-bs-interval="12000">
-            <img class="d-block w-100" src="/static/img/Carousel1.png" alt="Fourth slide">
+            <img class="d-block w-100" src="/static/img/Carousel2.png" alt="Fourth slide">
             <div class="carousel-caption">
               <h5>{{user.name}}'s Periods</h5>
 

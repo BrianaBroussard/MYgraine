@@ -146,13 +146,13 @@
                         {% for trigger in users_triggers %}
                         <input type="checkbox" class="btn-check" name="triggers" value="{{trigger.trigger_id}}"
                           id="{{trigger}}" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="{{trigger}}"><span
+                        <label class="btn btn-outline-primary m-1" for="{{trigger}}"><span
                             class="material-symbols-outlined">
                             {{trigger.icon}}
                           </span><br>{{trigger.trigger_name}}</label>
                         {% endfor %}
                         {% endif %}
-                      <p id="new-trigger"></p>
+                      <div id="new-trigger"></div>
                       <div class="ui-widget ui-front">
                         <input for="add-trigger" type="text" name="add-trigger" id="add-trigger">
                         <button id="add-trigger-button">Add Trigger</button>

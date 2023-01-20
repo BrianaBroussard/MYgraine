@@ -431,7 +431,7 @@ def log_headache():
         headache_med = crud.create_headache_med(headache_id, med_id, dose, efficacy)
 
 
-    flash(f"headache successfully logged")
+    flash(f"Headache successfully logged!")
 
     if request.form.get('user-route') == "from-calendar":
         return redirect("/user_calendar")
@@ -516,7 +516,12 @@ def show_headache(headache_id):
         trigger_names.append(trigger.trigger_name)
 
     meds_lst = crud.get_meds_for_headache(headache_id)
-
+    
+    if headache.date_end == headache.date_start:
+        HA_length = None
+    else:
+        HA_length = humanize.precisedelta((headache.date_end - headache.date_start),minimum_unit="minutes",format="%0.0f")
+ 
 
     default_meds = crud.show_all_default_meds()
     users_triggers = crud.get_users_triggers(user.user_id)
@@ -526,9 +531,11 @@ def show_headache(headache_id):
                              user=user, 
                              triggers = trigger_names,
                              headache_type = headache_type,
+                             HA_length = HA_length,
                              users_triggers = users_triggers,
                              meds_lst = meds_lst,
-                             default_meds = default_meds)
+                             default_meds = default_meds,
+                             )
 
 
 @app.route("/delete-headache/<headache_id>")
