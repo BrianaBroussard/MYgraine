@@ -20,7 +20,7 @@
 <div style="display: inline-block; text-align: left;">
   <h3> Edit MYgraine Notifications</h3>
     <p>
-      Phone Number<span style="color: red">*</span> <input id="phone-number" type="phone_number" name="phone_number" placeholder="555-555-5555" required
+      Phone Number: <span style="color: red">*</span> <input id="phone-number" type="phone_number" name="phone_number" placeholder="555-555-5555" required
         pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" {%if user.phone_number%} value="{{phonevalue}}" {% endif %}>
     </p>
     <p>
@@ -41,7 +41,7 @@
     </p>
     <p id="schedule-notification">
       <label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> 
-      <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required {% if user.scheduled_reminder %} value="{{user.scheduled_reminder}}" {% else %} value =" " {% endif %}/>
+      <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" {% if user.scheduled_reminder %} value="{{user.scheduled_reminder}}" {% else %} value =" " {% endif %}/>
     </p>
     <input class="btn btn-primary mt-2" type="submit">
 </div>
@@ -51,10 +51,19 @@
 </div>
 </div>
 
-
-
-
-
-
+<script> 
+// makes scheduled time required if select yes for notifications
+  const notifications_true = document.getElementById("notifications-true");
+  const notifications_false = document.getElementById("notifications-false");
+  
+  notifications_true.addEventListener("click", (evt) => {
+    document.querySelector("#scheduled-reminder").setAttribute("required", "true");
+  }
+  );
+  
+  notifications_false.addEventListener("click", (evt) => {
+    document.querySelector("#scheduled-reminder").removeAttribute("required");
+  }
+  );</script>
 
 {% endblock %}

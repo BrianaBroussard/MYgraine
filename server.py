@@ -420,7 +420,7 @@ def log_headache():
     db.session.commit()       
 
     meds = request.form.getlist("meds")  #returns a list of checked medications med_ids
-    #print("************************************************************",meds)
+   
     for med_id in meds:
         efficacy = request.form.get(f"efficacy-{med_id}")
         dosage = request.form.get(f"dose-{med_id}")
@@ -563,7 +563,7 @@ def delete_headache(headache_id):
     db.session.commit()
     flash("Headache Deleted")
 
-    return redirect("/user_dashboard")
+    return redirect("/user_calendar")
 
 
 @app.route('/search-triggers.json', methods=['POST'])

@@ -44,6 +44,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
+
 //adds form for medication efficacy and dosage if marked taken
 const add_med_button = document.querySelectorAll('.meds');
 
@@ -52,20 +53,15 @@ for (let i=0; i< add_med_button.length; i++) {
   let med_id = add_med_button[i].getAttribute('value')
   
   add_med_button[i].addEventListener('click', (event) => {
-    document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0">Not Sure</option><option value="1">Not Helpful</option><option value="2">Somewhat Helpful</option><option value="3">Helpful</option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: <input type="text" name="dose-${med_id}" id="dose" placeholder= "example: 2 or 1.5"> </p>`)
-  }, { once: true });
+    if (document.querySelector(`#${med_name}-dose`)) {
+      document.querySelector(`#${med_name}-dose`).remove();
+    } else {
+    document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<div id="${med_name}-dose"> <p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0">Not Sure</option><option value="1">Not Helpful</option><option value="2">Somewhat Helpful</option><option value="3">Helpful</option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: 
+    <input type="number" step="0.5" max="10" min="0.5" value="1"  id="dose" name="dose-${med_id}" class="quantity-field border-1 text-center "> </p> </div>`)
+}});
 };
-//regex validation not working?
 
 
-    // clears scheduler if no reminder is selected 
-const notifications_false = document.querySelector('#notifications-false');
-
-function clearScheduler() {
-  document.getElementById("schedule-reminder").value = "";
-  
-}
-notifications_false.addEventListener('click', clearScheduler);
 
 
 // adds period date if add date is selected on headache form
@@ -75,5 +71,5 @@ period_button.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     document.querySelector('#period-date').insertAdjacentHTML('beforeend', 
-    '<label for="date-start">When did your last period start?</label> <input id="period-start" type="datetime-local" name="period-start" />');
+    '<label for="date-start">When did your last period start?</label> <input id="period-start" type="date" name="period-start" />');
 });
