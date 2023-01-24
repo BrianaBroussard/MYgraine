@@ -517,6 +517,7 @@ def show_headache(headache_id):
 
     meds_lst = crud.get_meds_for_headache(headache_id)
     
+    
     if headache.date_end == headache.date_start:
         HA_length = None
     else:

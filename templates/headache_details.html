@@ -40,6 +40,7 @@
       {% for med in meds_lst%}
       <h5>You took {{med[2]}} {{med[0]}} at {{med[1]}}, and reported it was {{med[3]}}. </h3>
       {% endfor %}
+      
       {% if headache.additional_notes %}
       <h5>Notes: {{headache.additional_notes}}</h5>
       {% endif %}

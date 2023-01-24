@@ -71,117 +71,133 @@
             <!-- Headache Modal -->
             <div class="modal fade" id="add_headache" tabindex="-1" aria-labelledby="Log your headache"
               aria-hidden="true">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title fs-5" id="modal-title">Add a Headache</h5>
+                    <h5 class="modal-title fs-5" id="modal-title">Add Headache</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <form action="/log-headache" method="POST">
-                      <p>
-                        <label for="date-start">Headache Started:<span style="color: red">*</span></label>
 
-                        <input id="date-start" type="date" name="date-start" required />
-                      </p>
-                      <p>
-                        <label for="date-start">Time Started:</label>
-                        <input id="time-start" type="time" name="time-start" />
-                      </p>
-                      <p>
-                        <label for="date-end">Headache Ended:</label>
-
-                        <input id="date-end" type="date" name="date-end" />
-                      </p>
-
-                      <p>
-                        <label for="pain-scale">Rate your pain:</label>
-
-                        <select name="pain-scale" id="pain-scale">
-                          {% for num in range(11) %}
-                          <option value="{{num}}">{{num}}</option>
-                          {% endfor %}
-                        </select>
-                      </p>
-
-                      <p>
-                        <label for="headache-type">What is the type of headache:</label>
-
-                        <select name="headache-type" id="headache-type">
-                          {% for type in headache_type %}
-                          <option value="{{type}}">{{type}}</option>
-                          {% endfor %}
-                        </select>
-                      </p>
-
-                      <p>
-                        Additional notes: <input type="text" name="notes" placeholder="Started above my eye">
-                      </p>
+                    <div class="container-fluid mx-4">
+                      <form action="/log-headache" method="POST">
+                        <div class="row">
+                          <p class="col-4">
+                            <label for="date-start">Date Started:<span style="color: red">*</span></label>
+                            <input id="date-start" type="date" name="date-start" required />
+                          </p>
+                          <p class="col-4">
+                            <label for="date-start">Time Started:</label>
+                            <input id="time-start" type="time" name="time-start" />
+                          </p>
+                        </div>
+                        <p class="col-4">
+                          <label for="date-end">Date Ended:</label>
+                          <input id="date-end" type="date" name="date-end" />
+                        </p>
 
 
-                      <p>
+                        <div class="row">
+                          <p class="col-4">
+                            <label for="pain-scale">Rate your pain:</label>
 
-                        {% if user.get_period %}
-                        Are you currently on your period?
-                        <input type="checkbox" name="period" value="True" id="periodtrue">
-                        <label> yes</label>
-                        <input type="checkbox" name="period" value="False" id="periodfalse">
-                        <label> no </label>
+                            <select name="pain-scale" id="pain-scale">
+                              {% for num in range(11) %}
+                              <option value="{{num}}">{{num}}</option>
+                              {% endfor %}
+                            </select>
+                          </p>
 
+                          <p class="col-6">
+                            <label for="headache-type">What is the type of headache:</label>
 
-                        <button id="perioddate">Log Date</button>
+                            <select name="headache-type" id="headache-type">
+                              {% for type in headache_type %}
+                              <option value="{{type}}">{{type}}</option>
+                              {% endfor %}
+                            </select>
+                          </p>
+                        </div>
+                        <div class="row">
+                          <p class="col-11">
+                            Additional notes: <input type="text" class="form-control" name="notes"
+                              placeholder="Ex. Started above my eye...">
+                          </p>
+                        </div>
+                        
+                          <p >
+                            {% if user.get_period %}
+                            Are you currently on your period?
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="period" value="True" id="periodtrue">
+                            <label class="form-check-label" for="period-true">
+                              Yes
+                            </label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="period" id="periodfalse" value="False"
+                              id="periodfalse" checked>
+                            <label class="form-check-label" for="period-false">
+                              No
+                            </label>
+                          </div>
+                          <button class="btn btn-primary" id="perioddate">Log Date</button>
+                        </p>
 
-                      <p id="period-date">
-                      </p>
-
-                      {% endif %}
-
-                      </p>
-
-                      <h2>Log Any Potential Triggers</h2>
-
-                      <p> <label for="trigger-name">Select potential triggers:</label> </p>
-                      <p id="new-trigger">
-                        {% if user.user_triggers %}
-                        {% for trigger in users_triggers %}
-                        <input type="checkbox" class="btn-check" name="triggers" value="{{trigger.trigger_id}}"
-                          id="{{trigger}}" autocomplete="off">
-                        <label class="btn btn-outline-primary m-1" for="{{trigger}}"><span
-                            class="material-symbols-outlined">
-                            {{trigger.icon}}
-                          </span><br>{{trigger.trigger_name}}</label>
-                        {% endfor %}
+                        <p id="period-date">
+                        </p>
+                        
+                       
                         {% endif %}
-                      </p>
-                      
-                      <div class="ui-widget ui-front">
-                        <input for="add-trigger" type="text" name="add-trigger" id="add-trigger">
-                        <button id="add-trigger-button">Add Trigger</button>
-                      </div>
-                      
-                      
-                      <p>
-                        <h2>Did you take any medication?</h2>
+
+                        </p>
+
+
+
+                        <h5> <label for="trigger-name">Potential Triggers:</label> </h5>
+                        <p id="new-trigger">
+                          {% if user.user_triggers %}
+                          {% for trigger in users_triggers %}
+                          <input type="checkbox" class="btn-check" name="triggers" value="{{trigger.trigger_id}}"
+                            id="{{trigger}}" autocomplete="off">
+                          <label class="btn btn-outline-primary m-1" for="{{trigger}}"><span
+                              class="material-symbols-outlined">
+                              {{trigger.icon}}
+                            </span><br>{{trigger.trigger_name}}</label>
+                          {% endfor %}
+                          {% endif %}
+                        </p>
+
+                        <div class="ui-widget ui-front">
+                          <input for="add-trigger" type="text" name="add-trigger" id="add-trigger">
+                          <button class="btn btn-primary" id="add-trigger-button">Add Trigger</button>
+                        </div>
+
+
+                        <p>
+                        <h5>Did you take any medication?</h5>
                         {% for med in default_meds %}
                         <input type="checkbox" class="btn-check meds" name="meds" value="{{med.med_id}}"
                           id="{{med.med_name}}" autocomplete="off">
                         <label class="btn btn-outline-primary m-1" for="{{med.med_name}}"><i class="{{med.icon}}"></i>
                           <br>{{med.med_name}} {{med.dose}}</label>
                         {% endfor %}
-                      </p>
-                      <p id="selected-meds"></p>
-                      <p>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Log Headache</button>
-                        <input type="hidden" id="user-route" name="user-route" value="user-dash">
-                      </p>
-                    </form>
+                        </p>
+                        <p id="selected-meds"></p>
+                        <p>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Log Headache</button>
+                          <input type="hidden" id="user-route" name="user-route" value="user-dash">
+                        </p>
+                      </form>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <p><span style="color: red">*</span>required field</p>
                   </div>
                 </div>
               </div>
+
             </div>
             <!-- Button triggers the Headache modal -->
             <a class="nav-link" href="#add_headache" data-bs-toggle="modal" data-bs-target="#add_headache"><i
@@ -207,12 +223,12 @@
 
   {% endif %}
 
-        <!-- Flash messages -->
-        {% for msg in get_flashed_messages() %}
-        <h4 class="flash-msg mt-3 ms-5">
-          {{ msg }}
-        </h4>
-        {% endfor %}
+  <!-- Flash messages -->
+  {% for msg in get_flashed_messages() %}
+  <h4 class="flash-msg mt-3 ms-5">
+    {{ msg }}
+  </h4>
+  {% endfor %}
 
 
   <!-- Side Nav Bar-->
@@ -265,9 +281,8 @@
             <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
             <li class="nav-item"><a href="https://github.com/BrianaBroussard" class="nav-link px-2 text-muted"
                 target="_blank" rel="noopener noreferrer"><i class="bi bi-github"></i></a></li>
-            <li class="nav-item"><a href="https://www.linkedin.com/in/brianajbroussard-2020/"
-                class="nav-link px-2 text-muted" target="_blank" rel="noopener noreferrer"><i
-                  class="bi bi-linkedin"></i></a></li>
+            <li class="nav-item"><a href="https://www.linkedin.com/in/brianabroussard/" class="nav-link px-2 text-muted"
+                target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i></a></li>
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" role="switch" id="color-toggle">
               <label class="form-check-label" for="color-toggle">Dark Mode</label>
