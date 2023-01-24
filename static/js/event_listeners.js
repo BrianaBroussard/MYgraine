@@ -56,7 +56,7 @@ for (let i=0; i< add_med_button.length; i++) {
     if (document.querySelector(`#${med_name}-dose`)) {
       document.querySelector(`#${med_name}-dose`).remove();
     } else {
-    document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<div id="${med_name}-dose"> <p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0">Not Sure</option><option value="1">Not Helpful</option><option value="2">Somewhat Helpful</option><option value="3">Helpful</option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: 
+    document.querySelector("#selected-meds").insertAdjacentHTML('beforeend', `<div id="${med_name}-dose"> <p> <label for="efficacy">Was ${med_name} helpful?:</label> <select name="efficacy-${med_id}" id="efficacy"> <option value="0"> &#128533 Not Sure </option><option value="1"> &#128545 Not Helpful </option><option value="2"> &#128578 Somewhat Helpful </option><option value="3"> &#128512 Helpful </option> </select></p> <p> <label for="dose">How many ${med_name} did you take?: 
     <input type="number" step="0.5" max="10" min="0.5" value="1"  id="dose" name="dose-${med_id}" class="quantity-field border-1 text-center "> </p> </div>`)
 }});
 };

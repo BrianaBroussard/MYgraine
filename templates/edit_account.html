@@ -19,10 +19,18 @@
     
 <div style="display: inline-block; text-align: left;">
   <h3> Edit MYgraine Notifications</h3>
-    <p>
-      Phone Number: <span style="color: red">*</span> <input id="phone-number" type="phone_number" name="phone_number" placeholder="555-555-5555" required
+  
+    
+    <div class="row">
+      <label for="phone-number" class="col-4 col-form-label">Phone Number: <span style="color: red">*</span></label>
+      <div class="col-sm-6">
+       <input class="form-control" id="phone-number" type="phone_number" name="phone_number" placeholder="555-555-5555" required
         pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" {%if user.phone_number%} value="{{phonevalue}}" {% endif %}>
-    </p>
+      </div>
+    </div>
+
+  
+
     <p>
       Allow notifications for MYgraine to remind you to log headaches: <span style="color: red">*</span>
       
@@ -43,7 +51,7 @@
       <label for="scheduled-reminder">When do you want to be reminded to log your headaches?</label> 
       <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" {% if user.scheduled_reminder %} value="{{user.scheduled_reminder}}" {% else %} value =" " {% endif %}/>
     </p>
-    <input class="btn btn-primary mt-2" type="submit">
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
 </div>
 </div>
 

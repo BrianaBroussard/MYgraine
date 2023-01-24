@@ -100,12 +100,21 @@
                         <div class="row">
                           <p class="col-4">
                             <label for="pain-scale">Rate your pain:</label>
-
                             <select name="pain-scale" id="pain-scale">
-                              {% for num in range(11) %}
-                              <option value="{{num}}">{{num}}</option>
-                              {% endfor %}
+                              <option value="0">&#128526 &nbsp; 0</option>
+                              <option value="1">&#128529 &nbsp; 1</option>
+                              <option value="2">&#128532 &nbsp; 2</option>
+                              <option value="3">&#128531 &nbsp; 3</option>
+                              <option value="4">&#128552 &nbsp; 4</option>
+                              <option value="5">&#128560 &nbsp; 5</option>
+                              <option value="6">&#128534 &nbsp; 6</option>
+                              <option value="7">&#128547 &nbsp; 7</option>
+                              <option value="8">&#128553 &nbsp; 8</option>
+                              <option value="9">&#128555 &nbsp; 9</option>
+                              <option value="10">&#128561 &nbsp; 10</option>
                             </select>
+
+                            
                           </p>
 
                           <p class="col-6">
@@ -175,7 +184,7 @@
 
 
                         <p>
-                        <h5>Did you take any medication?</h5>
+                        <h5>Medications:</h5>
                         {% for med in default_meds %}
                         <input type="checkbox" class="btn-check meds" name="meds" value="{{med.med_id}}"
                           id="{{med.med_name}}" autocomplete="off">
