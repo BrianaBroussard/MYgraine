@@ -30,7 +30,12 @@ Category | Tech
 - Enable Dark Mode for better visual comfort during a headache.
 - Create an account and log in with Google Account.
 
-
+## Demo
+![account](static/img/README_img/Create%20Account%20Page.png "Create Account page")
+![profile](static/img/README_img/UserProfile.png "User Profile")
+![dark mode](static/img/README_img/DarkMode.png "Dark Mode")
+![triggers](static/img/README_img/triggercharts.png "Triggers")
+![calendar](static/img/README_img/Calendar.png "Calendar")
 
 ## Set Up
 
