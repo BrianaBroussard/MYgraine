@@ -8,7 +8,6 @@ from model import db, connect_to_db, User
 
 account_sid = os.environ['account_sid']
 auth_token = os.environ['auth_token']
-
 twilio_number = os.environ['twilio_number']
 
 
@@ -19,7 +18,6 @@ with app.app_context():
    #Returns list of tuples with all user's name and phone number
      
     users_phone_scheduled_reminder = []
-    #query = User.query.filter(User.phone_number == "+19498387000", User.user_id == 9).all() #test query change id for test user prn 
     query = User.query.all()
     
     
