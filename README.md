@@ -31,14 +31,17 @@ Category | Tech
 - Create an account and log in with Google Account.
 
 ## Demo
-Log in with Google and Schedule reminder notifications
+
+Log in with Google and schedule reminder notifications:
 ![account](static/img/README_img/CreateAccount.png "Create Account page")
-User Profile
+<br><br>
+User Profile:
 ![profile](static/img/README_img/UserProfile.png "User Profile")
-Dark Mode
+<br><br>
+Dark Mode:
 ![dark mode](static/img/README_img/DarkMode.png "Dark Mode")
 
-![triggers](static/img/README_img/triggercharts.png "Triggers")
+![triggers](static/img/README_img/Triggers.png "Triggers")
 ![calendar](static/img/README_img/Calendar.png "Calendar")
 
 ## Set Up
