@@ -19,7 +19,7 @@ Category | Tech
 **Backend** | [Python], [Flask], [Postgresql], [SQLAlchemy]
 **Frontend** | [JavaScript] (AJAX, JSON), [Jinja2], [HTML], [CSS], [Bootstrap] 
 **Libraries** | [FullCalendar], [Chart.js], [jQuery]
-**API** | [Twilio],[Google OAuth], [Inspiration Quote]
+**API** | [Twilio], [Google OAuth], [Inspiration Quote]
 **Other** | [Canva]
 
 ## Features
@@ -27,6 +27,8 @@ Category | Tech
 - Schedule daily text reminders at a specific time to be reminded to log headaches.
 - View, select, and delete logged headache events from a calendar.
 - View personal trigger data on profile and on a chart.
+- Enable Dark Mode for better visual comfort during a headache.
+- Create an account and log in with Google Account.
 
 
 
@@ -95,6 +97,7 @@ Run the app:
 ## About Me
 
 Hi my name is Briana Broussard. I was previously an Optometrist before becoming a Full-Stack Software Engineer. I am passionate about healthcare and technology and look forward to connecting with you!
+<br>
 [Linkedin]
 
 

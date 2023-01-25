@@ -60,7 +60,7 @@
    {
      id: '{{ headache.headache_id }}',
      title: '{{headache.headache_type}}',
-     description:'Type: {{headache.headache_type}} {% if headache.pain_scale%} Headache Pain:{{headache.pain_scale}}/10{% endif %} {% if headache.headache_trigger%} Logged Triggers: {% for headache_trigger in headache.headache_trigger%} {{headache_trigger.trigger.trigger_name}}, {% endfor %} {% endif %}',
+     description:'Type: {{headache.headache_type}}  {% if headache.pain_scale%} Pain: {{headache.pain_scale}}/10{% endif %} {% if headache.headache_trigger%} Triggers: {% for headache_trigger in headache.headache_trigger%} {{headache_trigger.trigger.trigger_name}}, {% endfor %} {% endif %} {% if headache.on_period == True%} + Period {%endif%}',
      start: '{{headache.date_start}}',
      end: '{{headache.date_end}}', 
      url: '/headache/{{ headache.headache_id }}',  
@@ -75,6 +75,7 @@
      title: 'Period',
      description:'Period',
      start: '{{period.date_start}}',
+     color: '#4A49D6',
       
    },
    {% endfor %} 

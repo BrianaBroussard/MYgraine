@@ -20,10 +20,15 @@
     <h2>Your Possible Triggers</h2>
     <div>
 {% for triggername, triggercount in dict_users_triggers.items() %}  
- 
-<p> 
-    {{triggername}} - logged {{triggercount}} 
+ {% if triggercount == 1 %}
+ <p> 
+  {{triggername}} - Logged once
 </p>
+{% else %}
+<p> 
+    {{triggername}} - Logged {{triggercount}} times
+</p>
+{% endif %}
 
 {% endfor %}  
 

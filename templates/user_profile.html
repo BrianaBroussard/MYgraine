@@ -95,8 +95,11 @@
             <img class="d-block w-100" src="/static/img/Carousel2.png" alt="Fourth slide">
             <div class="carousel-caption">
               <h5>{{user.name}}'s Periods</h5>
-
+              {% if percent_on_period != None %}
               <p>{{percent_on_period}}% of your headaches were while you were on your period </p>
+              {% else %}
+              <p>None of your headaches were while you were on your period </p>
+              {% endif %}
             </div>
           </div>
           {% endif %}
