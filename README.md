@@ -106,11 +106,31 @@ Run the app:
     python3 server.py
 ```
 
+Edit your job.sh file:
+
+```bash
+#sets virtual env for cron tab
+source <absolutepath>/env/bin/activate
+
+#sourcing twilio keys in secrets.sh
+source <absolutepath>/secrets.sh
+
+#run twilio program to notify users
+python <absolutepath>/send_sms.py
+```
+
+ for To run Twilio notifications daily set a cron job to call job.sh at midnight:
+
+```bash
+crontab -e 
+   0 0 * * * cat <absolutepath>/job.sh 
+```
+
 ## About Me
 
 Hi my name is Briana Broussard. I was previously an Optometrist before becoming a Full-Stack Software Engineer. I am passionate about healthcare and technology and look forward to connecting with you!
 <br>
-[Linkedin]
+Find me on [Linkedin]
 
 
 
