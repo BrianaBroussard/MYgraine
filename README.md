@@ -39,6 +39,7 @@ User Profile:
 ![profile](static/img/README_img/UserProfile.png "User Profile")
 <br><br>
 Log Headaches:
+<br><br>
 ![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache.gif)
 <br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
@@ -46,6 +47,7 @@ Log Headaches:
 ![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar2.gif)
 <br><br>
 Dark Mode:
+<br><br>
 ![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode.gif)
 
 
