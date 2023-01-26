@@ -31,6 +31,8 @@ Category | Tech
 - Create an account and log in with Google Account.
 
 ## Demo
+Full Demo Video Coming Soon!
+<br>
 
 Log in with Google and schedule reminder notifications:
 ![account](static/img/README_img/CreateAccount.png "Create Account page")
@@ -43,6 +45,8 @@ Log Headaches:
 ![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache1.gif)
 <br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
+<br><br>
+Clickable Calendar:
 <br><br>
 ![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar3.gif)
 <br><br>
