@@ -38,11 +38,17 @@ Log in with Google and schedule reminder notifications:
 User Profile:
 ![profile](static/img/README_img/UserProfile.png "User Profile")
 <br><br>
-Dark Mode:
-![dark mode](static/img/README_img/DarkMode.png "Dark Mode")
-
+Log Headaches:
+![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache.gif)
+<br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
-![calendar](static/img/README_img/Calendar.png "Calendar")
+<br><br>
+![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar.gif)
+<br><br>
+Dark Mode:
+![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode.gif)
+
+
 
 ## Set Up
 
@@ -110,20 +116,20 @@ Edit your job.sh file:
 
 ```bash
 #sets virtual env for cron tab
-source <absolutepath>/env/bin/activate
+source ABSOLUTEPATH/env/bin/activate
 
 #sourcing twilio keys in secrets.sh
-source <absolutepath>/secrets.sh
+source ABSOLUTEPATH/secrets.sh
 
 #run twilio program to notify users
-python <absolutepath>/send_sms.py
+python ABSOLUTEPATH/send_sms.py
 ```
 
- for To run Twilio notifications daily set a cron job to call job.sh at midnight:
+To run Twilio notifications daily set a cron job to call job.sh at midnight:
 
 ```bash
 crontab -e 
-   0 0 * * * cat <absolutepath>/job.sh 
+   0 0 * * * cat ABSOLUTEPATH/job.sh 
 ```
 
 ## About Me

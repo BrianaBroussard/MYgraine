@@ -7,7 +7,7 @@ from model import connect_to_db, db, Trigger, UserTrigger
 import crud
 from constants import headache_type
 from statistics import mode 
-from datetime import datetime
+from datetime import datetime, timedelta
 import humanize
 from passlib.hash import argon2
 from jinja2 import StrictUndefined
@@ -367,8 +367,10 @@ def log_headache():
             
     date_start = request.form.get('date-start')
     time_start = request.form.get('time-start')
-    if time_start:
-        date_start = date_start + " " + time_start
+    
+    
+    date_start = date_start + " " + time_start
+
     
     pain_scale = request.form.get('pain-scale')
 
@@ -389,6 +391,7 @@ def log_headache():
         date_end = date_ended
     else:
         date_end = date_start
+  
 
 
     headache = crud.create_headache(date_start,
