@@ -40,7 +40,7 @@ User Profile:
 <br><br>
 Log Headaches:
 <br><br>
-![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache.gif)
+![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache1.gif)
 <br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
 <br><br>
