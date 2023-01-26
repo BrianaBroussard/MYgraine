@@ -44,11 +44,11 @@ Log Headaches:
 <br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
 <br><br>
-![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar2.gif)
+![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar3.gif)
 <br><br>
 Dark Mode:
 <br><br>
-![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode.gif)
+![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode1.gif)
 
 
 
