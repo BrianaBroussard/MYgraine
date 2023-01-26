@@ -43,7 +43,7 @@ Log Headaches:
 <br><br>
 ![triggers](static/img/README_img/Triggers.png "Triggers")
 <br><br>
-![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar.gif)
+![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar2.gif)
 <br><br>
 Dark Mode:
 ![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode.gif)
