@@ -31,7 +31,7 @@ Category | Tech
 - Create an account and log in with Google Account.
 
 ## Demo
-Full Demo Video Coming Soon!
+Demo [Video]
 <br>
 
 Log in with Google and schedule reminder notifications:
@@ -41,17 +41,15 @@ User Profile:
 ![profile](static/img/README_img/UserProfile.png "User Profile")
 <br><br>
 Log Headaches:
-<br><br>
 ![Log Headaches](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/logheadache1.gif)
 <br><br>
+See Logged Triggers:
 ![triggers](static/img/README_img/Triggers.png "Triggers")
 <br><br>
 Clickable Calendar:
-<br><br>
 ![calendar](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/calendar3.gif)
 <br><br>
 Dark Mode:
-<br><br>
 ![dark mode](https://github.com/BrianaBroussard/MYgraine/blob/main/static/img/README_img/Darkmode1.gif)
 
 
@@ -164,3 +162,4 @@ Find me on [Linkedin]
 [Twilio]: <https://www.twilio.com/docs>
 [Inspiration Quote]: <https://api.goprogram.ai/inspiration/docs/>
 [Linkedin]: <https://www.linkedin.com/in/brianabroussard/>
+[Video]: <https://youtu.be/Z6luvShJ2MA>

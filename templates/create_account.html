@@ -12,215 +12,245 @@
   <section class="row align-items-center">
     <div class="col-lg-6 pe-40">
 
-<!-- Create Account Accordian if Google Authentication-->
+      <!-- Create Account Accordian if Google Authentication-->
 
-{% if google_email %}
-  <form action="/users" method="POST">
-   <!-- Create Account Accordian  -->
-   <div class="accordion" id="createAccount-accordian">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-          Basic Info
-        </button>
-      </h2>
-      <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body container">
-            <div class = "row">
-              <div class = "col-12">
-                <div class="row mb-3">
-          
-            <label for="email" class="col-sm-3 col-form-label">Email<span style="color: red">*</span> </label>
-            <div class="col-sm-8">
-            <input class="form-control" type="text" name="email" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value = "{{google_email}}" required>
-                </div>
-        </div>
-      
-        <div class="row mb-3">
-          <label for="name" class="col-form-label col-sm-3"> Name<span style="color: red">*</span> </label>
-          <div class="col-sm-8">
-          <input class="form-control" type="name" name="name" value = "{{google_name}}" required>
-        </div>
-      </div>
-      
-      <div class="row mb-3">
-        <label for="password" class="col-form-label col-sm-3">Password<span style="color: red">*</span> </label>
-        <div class="col-sm-8">
-        <input class="form-control" type="password" name="password" value = "{{google_password}}" required>
-            </div>
-          </div>
-
-        </div>
-      </div>
-          </div>
-      
-    </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapse show" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          Allow MYgraine Notifications
-        </button>
-      </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-
-      {% else %}
-      <!-- if not using Google Auth-->
+      {% if google_email %}
       <form action="/users" method="POST">
         <!-- Create Account Accordian  -->
-       <div class="accordion" id="createAccount-accordian">
-         <div class="accordion-item">
-           <h2 class="accordion-header" id="headingOne">
-             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-               1) Basic Info
-             </button>
-           </h2>
-           <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-             <div class="accordion-body container">
-              <div class = "row">
-                <div class = "col-12">
-                  <div class="row mb-3">
-                <label for="email" class="col-sm-3 col-form-label">Email: <span style="color: red">*</span> </label> 
-                <div class="col-sm-8">
-                <input class="form-control" type="text" name="email" placeholder="email@example.com" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" required>
+        <div class="accordion" id="createAccount-accordian">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Basic Info
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+              data-bs-parent="#accordionExample">
+              <div class="accordion-body container">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="row mb-3">
+
+                      <label for="email" class="col-sm-3 col-form-label">Email<span style="color: red">*</span> </label>
+                      <div class="col-sm-8">
+                        <input class="form-control" type="text" name="email" required
+                          pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" value="{{google_email}}"
+                          required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="name" class="col-form-label col-sm-3"> Name<span style="color: red">*</span> </label>
+                      <div class="col-sm-8">
+                        <input class="form-control" type="name" name="name" value="{{google_name}}" required>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="password" class="col-form-label col-sm-3">Password<span style="color: red">*</span>
+                      </label>
+                      <div class="col-sm-8">
+                        <input class="form-control" type="password" name="password" value="{{google_password}}"
+                          required>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-           
-            <div class="row mb-3">
-                <label for="name" class="col-form-label col-sm-3"> Name: <span style="color: red">*</span> </label> 
-                <div class="col-sm-8">
-                <input class="form-control" type="name" name="name"placeholder="Your Name" required>
-               
-              </div>
-            </div>
-          
+          </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapse show" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                  Allow MYgraine Notifications
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body container">
 
-            <div class="row mb-3">
-                <label for="password" class="col-form-label col-sm-3">Password: <span style="color: red">*</span> </label> 
-                <div class="col-sm-8">
-                <input class="form-control" type="password" name="password" placeholder="Password" required>
-              </div>
-            </div>
-            <div class="row ">
-                 <div class="col offset-sm-3">
-                  <a href="/create-account-with-Google"><button type="button" class="login-with-google-btn">Sign Up with Google</button></a>
-                 </div>
-               </div>
-             </div>
-            </div>
-             </div>
-           </div>
-         </div>
-         <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="falso" aria-controls="collapseTwo">
-             2) Allow MYgraine Notifications
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-            <div class="accordion-body container">
+                  {% else %}
+                  <!-- if not using Google Auth-->
+                  <form action="/users" method="POST">
+                    <!-- Create Account Accordian  -->
+                    <div class="accordion" id="createAccount-accordian">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            1) Basic Info
+                          </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                          data-bs-parent="#accordionExample">
+                          <div class="accordion-body container">
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row mb-3">
+                                  <label for="email" class="col-sm-3 col-form-label">Email: <span
+                                      style="color: red">*</span> </label>
+                                  <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="email" placeholder="email@example.com"
+                                      required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                                      required>
+                                  </div>
+                                </div>
 
-      {% endif %}
+                                <div class="row mb-3">
+                                  <label for="name" class="col-form-label col-sm-3"> Name: <span
+                                      style="color: red">*</span> </label>
+                                  <div class="col-sm-8">
+                                    <input class="form-control" type="name" name="name" placeholder="Your Name"
+                                      required>
 
-      <div class = "row" >
-        <div class = "col-12">
-          <div class="row mb-3">
-            <label for="phone-number" class="col-sm-3 col-form-label"> Phone Number: <span style="color: red">*</span></label>  
-            <div class="col-sm-8">
-            <input class="form-control" type="phone_number" name="phone_number" placeholder="555-555-5555" required pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
-          </div>
-          </div>
-        
-          <p>
-            Allow MYgraine to text you daily reminders:<span style="color: red">*</span> 
-            
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="notifications" id="notifications-true" value= "True" >
-        <label class="form-check-label" for="notifications on">
-          Yes
-        </label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="notifications" id="notifications-false" value="False"  >
-        <label class="form-check-label" for="notifications off">
-          No
-        </label>
-      </div>
-          </p>
-          <p id="schedule-notification">
-          </p>
-        </div>
-      </div>
-       </div>
-     </div>
-   </div>
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingThree">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-         3) Additional Health Information
-        </button>
-      </h2>
-      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          
-            Do You Menstruate? 
-            <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="period" value= "True" id="periodtrue">
-            <label class="form-check-label" for="period-true">
-              Yes
-            </label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="period" id="periodfalse" value="False" id="periodfalse" >
-            <label class="form-check-label" for="period-false">
-              No
-            </label>
-          </div>
-          <p class="mt-3">
-            Select Possible Headache Triggers Below:
-            <p class="justify-content-md-start">
-            {% for trigger in triggers %}   
-            
-            <input type="checkbox" class="btn-check" name="default-triggers" value="{{trigger.trigger_id}}" id="{{trigger}}">
-            <label class="btn btn-outline-primary m-1" for="{{trigger}}"><span class="material-symbols-outlined">
-              {{trigger.icon}}
-              </span><br>{{trigger.trigger_name}}</label>
-             {% endfor %}  
-            </p>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <p>
-    
-    <button type="submit" class="btn btn-primary mt-2"> Submit</button>
-  </p>
-</form>
-        </div>
-        <figure class="col-lg-6">
-          <img class="img-fluid" src="/static/img/NurtureBrain.png" alt="hero-image">
-        </figure>
-      </section>
+                                  </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                  <label for="password" class="col-form-label col-sm-3">Password: <span
+                                      style="color: red">*</span> </label>
+                                  <div class="col-sm-8">
+                                    <input class="form-control" type="password" name="password" placeholder="Password"
+                                      required>
+                                  </div>
+                                </div>
+                                <div class="row ">
+                                  <div class="col offset-sm-3">
+                                    <a href="/create-account-with-Google"><button type="button"
+                                        class="login-with-google-btn">Sign Up with Google</button></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="falso" aria-controls="collapseTwo">
+                            2) Allow MYgraine Notifications
+                          </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                          data-bs-parent="#accordionExample">
+                          <div class="accordion-body container">
+
+                            {% endif %}
+
+                            <div class="row">
+                              <div class="col-12">
+                                <div class="row mb-3">
+                                  <label for="phone-number" class="col-sm-3 col-form-label"> Phone Number: <span
+                                      style="color: red">*</span></label>
+                                  <div class="col-sm-8">
+                                    <input class="form-control" type="phone_number" name="phone_number"
+                                      placeholder="555-555-5555" required
+                                      pattern="(1[- ])?\(?\d{3}\)?[- ]?\d{3}[- ]?\d{4}" required>
+                                  </div>
+                                </div>
+
+                                <p>
+                                  Allow MYgraine to text you daily reminders:<span style="color: red">*</span>
+
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="notifications"
+                                    id="notifications-true" value="True">
+                                  <label class="form-check-label" for="notifications on">
+                                    Yes
+                                  </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="notifications"
+                                    id="notifications-false" value="False">
+                                  <label class="form-check-label" for="notifications off">
+                                    No
+                                  </label>
+                                </div>
+                                </p>
+                                <p id="schedule-notification">
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            3) Additional Health Information
+                          </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                          data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+
+                            Do You Menstruate?
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="period" value="True" id="periodtrue">
+                              <label class="form-check-label" for="period-true">
+                                Yes
+                              </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="radio" name="period" id="periodfalse" value="False"
+                                id="periodfalse">
+                              <label class="form-check-label" for="period-false">
+                                No
+                              </label>
+                            </div>
+                            <p class="mt-3">
+                              Select Possible Headache Triggers Below:
+                            <p class="justify-content-md-start">
+                              {% for trigger in triggers %}
+
+                              <input type="checkbox" class="btn-check" name="default-triggers"
+                                value="{{trigger.trigger_id}}" id="{{trigger}}">
+                              <label class="btn btn-outline-primary m-1" for="{{trigger}}"><span
+                                  class="material-symbols-outlined">
+                                  {{trigger.icon}}
+                                </span><br>{{trigger.trigger_name}}</label>
+                              {% endfor %}
+                            </p>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>
+
+                      <button type="submit" class="btn btn-primary mt-2"> Submit</button>
+                    </p>
+                  </form>
+                </div>
+                <figure class="col-lg-6">
+                  <img class="img-fluid" src="/static/img/NurtureBrain.png" alt="hero-image">
+                </figure>
+  </section>
 </main>
 
 
 <script>
-    // adds time schedule to create account form if user allows notifications
-    const schedule_notifications = document.querySelector('#notifications-true');
+  // adds time schedule to create account form if user allows notifications
+  const schedule_notifications = document.querySelector('#notifications-true');
 
-function addScheduler() {
-  document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<div id="scheduler"> <label for="scheduled-reminder" >Scheduled Reminder Time: </label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/></div>');
-}
-schedule_notifications.addEventListener('click', addScheduler);
+  function addScheduler() {
+    document.querySelector('#schedule-notification').insertAdjacentHTML('beforeend', '<div id="scheduler"> <label for="scheduled-reminder" >Scheduled Reminder Time: </label> <input id="scheduled-reminder" type="time" name="scheduled-reminder" min="01:01" max="24:00" required/></div>');
+  }
+  schedule_notifications.addEventListener('click', addScheduler);
 
-const remove_schedule = document.querySelector('#notifications-false');
+  const remove_schedule = document.querySelector('#notifications-false');
 
-function removeScheduler() {
-  if (document.querySelector('#scheduler')) {
+  function removeScheduler() {
+    if (document.querySelector('#scheduler')) {
       document.querySelector('#scheduler').remove();
-  }};
-remove_schedule.addEventListener('click', removeScheduler);
+    }
+  };
+  remove_schedule.addEventListener('click', removeScheduler);
 </script>
 
 {% endblock %}
