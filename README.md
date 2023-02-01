@@ -162,4 +162,4 @@ Find me on [Linkedin]
 [Twilio]: <https://www.twilio.com/docs>
 [Inspiration Quote]: <https://api.goprogram.ai/inspiration/docs/>
 [Linkedin]: <https://www.linkedin.com/in/brianabroussard/>
-[Video]: <https://youtu.be/Z6luvShJ2MA>
+[Video]: <https://www.youtube.com/watch?v=LYImnTPi2_A>
