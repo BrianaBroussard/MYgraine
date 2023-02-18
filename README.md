@@ -133,7 +133,7 @@ To run Twilio notifications daily set a cron job to call job.sh at midnight:
 
 ```bash
 crontab -e 
-   0 0 * * * cat ABSOLUTEPATH/job.sh 
+   0 0 * * * sh ABSOLUTEPATH/job.sh 
 ```
 
 ## About Me
